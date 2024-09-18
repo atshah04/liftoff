@@ -8,3 +8,6 @@ Bhavya Shah - bnshah@uwaterloo.ca
 
 # Team Contract
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Team-101-3-Team-Contract 
+
+# Project Proposal
+https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Team-101-3-Project-Proposal 
