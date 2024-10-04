@@ -1,3 +1,5 @@
+package com.example.liftoff.ui.workouts
+
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
