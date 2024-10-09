@@ -14,3 +14,6 @@ https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Team-101-3-Project-Proposal
 
 # Design Proposal
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Team-101-3-Design-Proposal 
+
+# Sprint 1 Release
+https://git.uwaterloo.ca/atshah/team101-3/-/blob/fde125f873424427a2538da0b920e26827e4266b/app-debug.apk
