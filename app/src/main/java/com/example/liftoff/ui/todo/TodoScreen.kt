@@ -5,22 +5,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
-import androidx.compose.foundation.border
-import androidx.compose.ui.graphics.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.ComposableTarget
-import androidx.compose.ui.R
 import androidx.compose.ui.draw.clip
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.TextField
 import androidx.compose.material3.Button
 import androidx.compose.runtime.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 
 
 data class ToDo(val name: String, var isDone: Boolean = false)
@@ -60,7 +56,6 @@ fun ToDoItemRow (item : ToDo, viewModel : ToDoModel) {
             Text("Delete")
         }
     }
-
 }
 
 @Composable
@@ -68,20 +63,36 @@ fun TodoScreen() {
     val TodoViewModel = remember {ToDoModel()};
     var textState by remember { mutableStateOf(TextFieldValue("")) }
 
-    Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-        Text(modifier = Modifier.padding(bottom = 16.dp), text = "ToDo Screen")
-
-        TextField(
-            value = textState,
-            onValueChange = { textState = it },
-            label = { Text("Add New Task") }
+    Column (modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start) {
+        Text(
+            text = "To Do",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.End,
+            modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
         )
 
-        Button(onClick = {
-            TodoViewModel.addTodo(textState.text)
-            textState = TextFieldValue("") // Clear the input field
-        }) {
-            Text("Add Task")
+        Row (modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+        )
+        {
+            TextField(
+                modifier = Modifier.weight(1f),
+                value = textState,
+                onValueChange = { textState = it },
+                label = { Text("Add New Task") }
+            )
+            Button(onClick = {
+                    TodoViewModel.addTodo(textState.text)
+                    textState = TextFieldValue("") // Clear the input field
+            }) {
+                Text("Add Task")
+            }
         }
 
         LazyColumn {

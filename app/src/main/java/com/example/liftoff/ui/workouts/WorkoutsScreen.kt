@@ -9,6 +9,9 @@ import androidx.compose.foundation.border
 import androidx.compose.ui.graphics.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+
 data class Workout(val name: String, val reps: Int, val sets: Int)
 data class WorkoutSession(val exercises: List<Workout>)
 
@@ -48,9 +51,24 @@ fun WorkoutsScreen() {
             Workout(name = "Burpees", reps = 15, sets = 3))),
     )
 
-    Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-        Text(modifier = Modifier.padding(bottom = 16.dp), text = "Workouts Screen")
-        DynamicColumn(items = data)
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp),
+        contentAlignment = Alignment.TopStart) {
+        Text(
+            text = "My Workouts",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.End,
+            modifier = Modifier.padding(top = 16.dp)
+        )
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth().padding(top = 80.dp)
+        ) {
+            DynamicColumn(items = data)
+        }
     }
 }
 
