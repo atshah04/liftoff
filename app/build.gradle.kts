@@ -69,4 +69,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.material3)
+    implementation(libs.postgrest.kt)
+    implementation(libs.auth.kt)
+    implementation(libs.storage.kt)
+    implementation(libs.ktor.client.android)
 }
