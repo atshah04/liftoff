@@ -15,7 +15,7 @@ object SupabaseService {
     private const val SUPABASE_KEY = BuildConfig.SUPABASE_KEY
 
     // Initialize the Supabase client
-    private val client: SupabaseClient by lazy {
+    val client: SupabaseClient by lazy {
         createSupabaseClient(
             supabaseUrl = SUPABASE_URL,
             supabaseKey = SUPABASE_KEY
