@@ -1,67 +1,51 @@
 package com.example.liftoff.data.repository
 
-import com.example.liftoff.data.database.SupabaseService
 import com.example.liftoff.data.dto.WorkoutDto
-import com.example.liftoff.data.model.WorkoutType
-import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class WorkoutRepository {
-    private val postgrest: Postgrest = SupabaseService.postgrest
+class WorkoutRepository(private val supabase: SupabaseClient) {
 
     // Fetch workouts by user ID
     suspend fun getWorkoutsByUserId(userId: Int): List<WorkoutDto> = withContext(Dispatchers.IO) {
-        val response = postgrest.from("workouts").select(
-            columns = Columns.list("id", "user_id", "workout_name", "duration", "sets", "reps", "weight")
+        val response = supabase.from("workouts").select(
+            columns = Columns.list("user_id", "workout_type", "workout_name", "duration", "sets", "reps", "weight")
         ) {
             filter {
                 eq("user_id", userId)
             }
         }
 
-        val workouts = response.decodeList<Map<String, Any>>().map { row ->
-            val workoutType = if (row["duration"] != null) {
-                WorkoutType.Timed(row["duration"] as Int)
-            } else {
-                WorkoutType.Strength(
-                    sets = row["sets"] as Int,
-                    reps = row["reps"] as Int,
-                    weight = row["weight"] as Double
-                )
-            }
-
+        val workouts = response.decodeList<WorkoutDto>().map { row ->
             WorkoutDto(
-                id = row["id"] as Int,
-                userId = row["user_id"] as Int,
-                workoutName = row["workout_name"] as String,
-                workoutType = workoutType
+                userId = row.userId,
+                workoutType = row.workoutType,
+                workoutName = row.workoutName,
+                duration = row.duration,
+                sets = row.sets,
+                reps = row.reps,
+                weight = row.weight,
             )
         }
 
         return@withContext workouts
     }
 
-
     // Create a new workout
-    suspend fun createWorkout(workout: WorkoutDto) = withContext(Dispatchers.IO) {
-        val workoutData = when (workout.workoutType) {
-            is WorkoutType.Timed -> mapOf(
-                "user_id" to workout.userId,
-                "workout_name" to workout.workoutName,
-                "duration" to (workout.workoutType).duration
-            )
-            is WorkoutType.Strength -> mapOf(
-                "user_id" to workout.userId,
-                "workout_name" to workout.workoutName,
-                "sets" to (workout.workoutType).sets,
-                "reps" to (workout.workoutType).reps,
-                "weight" to (workout.workoutType).weight
-            )
-        }
+    suspend fun createWorkout(workoutDto: WorkoutDto) {
+        val workoutData = WorkoutDto(
+            userId = workoutDto.userId,
+            workoutType = workoutDto.workoutType,
+            workoutName = workoutDto.workoutName,
+            duration = workoutDto.duration,
+            sets = workoutDto.sets,
+            reps = workoutDto.reps,
+            weight = workoutDto.weight
+        )
 
-        postgrest.from("workouts").insert(workoutData)
+        supabase.from("workouts").insert(workoutData)
     }
-
 }
