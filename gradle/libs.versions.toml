@@ -21,6 +21,7 @@ navigationUiKtx = "2.6.0"
 kotlinxSerializationJson = "1.6.2"
 composeCompiler = "1.5.2"
 storageKt = "3.0.1"
+mockk = "1.12.0"
 
 [libraries]
 auth-kt = { module = "io.github.jan-tennert.supabase:auth-kt", version.ref = "authKt" }
@@ -49,6 +50,7 @@ androidx-compose-compiler = { module = "androidx.compose.compiler:compiler", ver
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorClientAndroid" }
 postgrest-kt = { module = "io.github.jan-tennert.supabase:postgrest-kt", version.ref = "authKt" }
 storage-kt = { module = "io.github.jan-tennert.supabase:storage-kt", version.ref = "storageKt" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk"}
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
