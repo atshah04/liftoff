@@ -5,11 +5,9 @@ import kotlinx.serialization.SerialName
 
 @Serializable
 data class WorkoutDto(
+    val id: Int?= null,
     @SerialName("user_id") val userId: Int,
-    @SerialName("workout_type") val workoutType: String,
-    @SerialName("workout_name") val workoutName: String,
-    val duration: Int? = null,
-    val sets: Int? = null,
-    val reps: Int? = null,
-    val weight: Double? = null
+    val name: String,
+    val date: String,
+    val exercises: List<ExerciseDto>
 )

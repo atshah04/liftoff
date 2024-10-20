@@ -1,5 +1,6 @@
 package com.example.liftoff.data.repository
 
+import com.example.liftoff.data.dto.ExerciseDto
 import com.example.liftoff.data.dto.WorkoutDto
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.from
@@ -12,22 +13,19 @@ class WorkoutRepository(private val supabase: SupabaseClient) {
     // Fetch workouts by user ID
     suspend fun getWorkoutsByUserId(userId: Int): List<WorkoutDto> = withContext(Dispatchers.IO) {
         val response = supabase.from("workouts").select(
-            columns = Columns.list("user_id", "workout_type", "workout_name", "duration", "sets", "reps", "weight")
+            columns = Columns.list("id", "user_id", "name", "date", "exercises")
         ) {
             filter {
                 eq("user_id", userId)
             }
         }
 
-        val workouts = response.decodeList<WorkoutDto>().map { row ->
+        val workouts = response.decodeList<WorkoutDto>().map { workout ->
             WorkoutDto(
-                userId = row.userId,
-                workoutType = row.workoutType,
-                workoutName = row.workoutName,
-                duration = row.duration,
-                sets = row.sets,
-                reps = row.reps,
-                weight = row.weight,
+                userId = workout.userId,
+                name = workout.name,
+                date = workout.date,
+                exercises = workout.exercises
             )
         }
 
@@ -38,12 +36,9 @@ class WorkoutRepository(private val supabase: SupabaseClient) {
     suspend fun createWorkout(workoutDto: WorkoutDto) {
         val workoutData = WorkoutDto(
             userId = workoutDto.userId,
-            workoutType = workoutDto.workoutType,
-            workoutName = workoutDto.workoutName,
-            duration = workoutDto.duration,
-            sets = workoutDto.sets,
-            reps = workoutDto.reps,
-            weight = workoutDto.weight
+            name = workoutDto.name,
+            date = workoutDto.date,
+            exercises = workoutDto.exercises
         )
 
         supabase.from("workouts").insert(workoutData)
