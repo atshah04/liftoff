@@ -15,14 +15,17 @@ data class ExerciseTodo(
     val sets: Int? = null,
     val reps: Int? = null,
     val weight: Double? = null,
-    var isDone: Boolean
+    var isDone: Boolean,
+    val id: Int
 )
 
 class WorkoutsTodoViewModel () {
+    var curId = 0
     val todoItems = mutableStateListOf<ExerciseTodo>();
 
     fun addWorkout(workout: ExerciseTodo) {
         todoItems.add(workout);
+        curId++
     }
     fun removeTodo(workout: ExerciseTodo) {
         todoItems.remove(workout);

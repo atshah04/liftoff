@@ -24,81 +24,105 @@ import androidx.compose.material3.SwipeToDismissBox
 import androidx.navigation.NavHostController
 import com.example.liftoff.data.dto.ExerciseDto
 import androidx.compose.foundation.*
+import androidx.compose.ui.platform.LocalContext
 
+@Composable
+fun WorkoutTodoCard (item: ExerciseTodo) {
+    Card (
+        border = BorderStroke(1.dp, Color.Black),
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors (
+            containerColor = if (item.isDone) Color(0xFF98EC99) else Color.White
+        )) {
+        Column (
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = item.name,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            if (item.type == "timed") {
+                Text (
+                    text = "Duration: ${item.duration} mins",
+                    fontSize = 16.sp,
+                    color = Color.Gray
+                )
+            } else {
+                Text (
+                    text = "Sets: ${item.sets}          Reps: ${item.reps}          Weight: ${item.weight} lbs",
+                    fontSize = 16.sp,
+                    color = Color.Gray
+                )
+            }
+        }
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DismissBackground () {
-    // do nothing
+fun DismissBackground (dismissState: SwipeToDismissBoxState) {
+    val color = when (dismissState.dismissDirection) {
+        SwipeToDismissBoxValue.StartToEnd -> Color(0xFFF58484)
+        SwipeToDismissBoxValue.EndToStart -> Color(0xFF98EC99)
+        SwipeToDismissBoxValue.Settled -> Color.Transparent
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color)
+            .padding(12.dp, 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Icon (
+            imageVector = Icons.Default.Delete,
+            contentDescription = "delete"
+        )
+
+        Spacer (modifier = Modifier)
+
+        Icon (
+            imageVector = Icons.Default.Done,
+            contentDescription = "Done"
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToDoItemRow (item : ExerciseTodo, viewModel : WorkoutsTodoViewModel) {
-    val dismissState = rememberSwipeToDismissBoxState()
 
-    val cardBackgroundColor = when (dismissState.dismissDirection) {
-        SwipeToDismissBoxValue.StartToEnd -> Color(0xFFF58484)
-        SwipeToDismissBoxValue.EndToStart -> Color(0xFF98EC99)
-        SwipeToDismissBoxValue.Settled -> Color(0xFFD5CECE)
-    }
+    val dismissState = rememberSwipeToDismissBoxState()
 
     SwipeToDismissBox(
         state = dismissState,
-        backgroundContent = { DismissBackground() },
-        content = {
-            Card (
-                border = BorderStroke(1.dp, Color.Black),
-                modifier = Modifier
-                    .padding(8.dp)
-                    .background(cardBackgroundColor)
-                    .fillMaxWidth(),
-
-            ) {
-                Column (
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    Text(
-                        text = item.name,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    if (item.type == "timed") {
-                        Text (
-                            text = "Duration: ${item.duration} mins",
-                            fontSize = 16.sp,
-                            color = Color.Gray
-                        )
-                    } else {
-                        Text (
-                            text = "Sets: ${item.sets}          Reps: ${item.reps}          Weight: ${item.weight} lbs",
-                            fontSize = 16.sp,
-                            color = Color.Gray
-                        )
-                    }
-                }
-            }
-        }
+        backgroundContent = { DismissBackground(dismissState) },
+        content = { WorkoutTodoCard(item) }
     )
 
     LaunchedEffect(dismissState.dismissDirection) {
         if (dismissState.dismissDirection == SwipeToDismissBoxValue.StartToEnd) {
             viewModel.removeTodo(item)
+            kotlinx.coroutines.delay(100)
+            dismissState.reset()
         } else if (dismissState.dismissDirection == SwipeToDismissBoxValue.EndToStart) {
             viewModel.toggleComplete(item)
+            kotlinx.coroutines.delay(100)
+            dismissState.reset()
         }
-
-        dismissState.reset()
     }
 }
 
 @Composable
 fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewModel) {
-    var textState by remember { mutableStateOf(TextFieldValue("")) }
 
     Column (modifier = Modifier
         .fillMaxSize()

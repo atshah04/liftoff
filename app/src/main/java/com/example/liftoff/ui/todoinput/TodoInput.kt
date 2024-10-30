@@ -168,7 +168,8 @@ fun WorkoutDropdownMenu(viewModel: WorkoutsTodoViewModel, onExerciseCreated: (Ex
                     sets = sets.toIntOrNull(),
                     reps = reps.toIntOrNull(),
                     weight = weight.toDoubleOrNull(),
-                    isDone = false
+                    isDone = false,
+                    id = viewModel.curId
                 ))
                 val exerciseDto = ExerciseDto(
                     name = name,
