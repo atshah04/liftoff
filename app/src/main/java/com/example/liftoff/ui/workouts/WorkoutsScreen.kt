@@ -13,11 +13,20 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import com.example.liftoff.data.dto.ExerciseDto
-import com.example.liftoff.data.dto.WorkoutDto
-import com.example.liftoff.data.repository.WorkoutRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.example.liftoff.data.repository.UserRepository
+import com.example.liftoff.data.viewmodel.UserViewModel
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
+
+
+data class Workout(val name: String, val reps: Int, val sets: Int)
+data class WorkoutSession(val exercises: List<Workout>)
+
+val default_mod = Modifier
+    .clip(RoundedCornerShape(2.dp))
+    .border(1.dp, Color.Black)
+    .padding(8.dp)
+    .fillMaxWidth(0.9f)
 
 @Composable
 fun WorkoutsScreen(db : WorkoutRepository) {
@@ -42,6 +51,15 @@ fun WorkoutsScreen(db : WorkoutRepository) {
             textAlign = TextAlign.End,
             modifier = Modifier.padding(top = 16.dp)
         )
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth().padding(top = 80.dp)
+        ) {
+            DynamicColumn(items = data)
+        }
+
+
     }
 
     Column(

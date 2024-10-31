@@ -17,7 +17,6 @@ fun BottomNavigationBar(navController: NavHostController) {
         BottomNavItem.Generate,
         BottomNavItem.Friends
     )
-
     NavigationBar {
         val navBackStackEntry = navController.currentBackStackEntryAsState().value
         val currentRoute = navBackStackEntry?.destination?.route

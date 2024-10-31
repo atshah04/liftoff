@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
+    //kotlin("plugin.serialization") version "2.0.20"
 }
 
 android {
@@ -95,4 +96,12 @@ dependencies {
     implementation(libs.auth.kt)
     implementation(libs.storage.kt)
     implementation(libs.ktor.client.android)
+
+    //implementation(platform("io.github.jan-tennert.supabase:bom:3.0.1"))
+    //implementation("io.github.jan-tennert.supabase:postgrest-kt")
+   // implementation("io.github.jan-tennert.supabase:auth-kt")
+
+   // implementation("io.ktor:ktor-client-android:3.0.0")
+
+
 }
