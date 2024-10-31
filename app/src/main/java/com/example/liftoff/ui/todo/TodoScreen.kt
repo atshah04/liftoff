@@ -33,6 +33,9 @@ import java.time.format.DateTimeFormatter
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlinx.coroutines.*
+import com.example.liftoff.data.database.SupabaseService
+
+
 
 fun ExerciseTodo.toExerciseDto(): ExerciseDto {
     return ExerciseDto(
@@ -143,7 +146,7 @@ fun ToDoItemRow (item : ExerciseTodo, viewModel : WorkoutsTodoViewModel) {
 }
 
 @Composable
-fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewModel, db: WorkoutRepository) {
+fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewModel) {
     val coroutineScope = rememberCoroutineScope()
 
     Column (modifier = Modifier
@@ -195,6 +198,10 @@ fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewMode
                     exercises = exerciseDtoList,
                     date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().time)
                 )
+
+                val supabase = SupabaseService.client
+                val db: WorkoutRepository = WorkoutRepository(supabase)
+
                 coroutineScope.launch {
                     db.createWorkout(workout)
                 }
