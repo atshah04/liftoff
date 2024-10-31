@@ -26,6 +26,7 @@ class GlobalState (val loggedIn: Boolean, val username: String) {
 
 @Composable
 fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modifier, gs: GlobalState, setGS: (GlobalState) -> Unit) {
+    val supabase = SupabaseService.client
     val sharedViewModel = WorkoutsTodoViewModel()
     NavHost(navController, startDestination = "login", modifier = modifier) {
         composable("login") { LoginScreen({

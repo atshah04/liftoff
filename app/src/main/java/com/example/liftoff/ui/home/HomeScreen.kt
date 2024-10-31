@@ -20,9 +20,6 @@ import com.example.liftoff.data.database.SupabaseService
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_URL
 import com.example.liftoff.data.dto.UserDto
 import com.example.liftoff.ui.navigation.GlobalState
-import com.example.liftoff.ui.workouts.Workout
-import com.example.liftoff.ui.workouts.WorkoutSession
-import com.example.liftoff.ui.workouts.default_mod
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.createSupabaseClient
@@ -40,6 +37,9 @@ data class Users(val users_information: List<User_>)
 
 val supabase =
     SupabaseService.client
+
+val default_mod = Modifier
+    .padding(16.dp)
 
 @Composable
 fun HomeScreen(gs: GlobalState) {

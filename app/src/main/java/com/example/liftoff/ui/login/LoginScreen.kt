@@ -13,7 +13,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.liftoff.data.database.SupabaseService
 import com.example.liftoff.ui.components.*
-import com.example.liftoff.ui.workouts.default_mod
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
 import kotlinx.coroutines.Dispatchers

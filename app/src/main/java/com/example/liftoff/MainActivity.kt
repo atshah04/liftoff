@@ -22,8 +22,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(bottomBar = { BottomNavigationBar(navController) }) { innerPadding ->
                     NavHostContainer(navController, Modifier.padding(innerPadding), gs, setGS)
                 }
-            }
-            NavHostContainer(navController, Modifier.padding(), gs, setGS)
+            } else NavHostContainer(navController, Modifier.padding(), gs, setGS)
         }
     }
 }
