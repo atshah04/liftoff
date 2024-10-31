@@ -5,11 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.draw.clip
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.runtime.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,23 +14,17 @@ import androidx.compose.material3.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.navigation.NavHostController
 import com.example.liftoff.data.dto.ExerciseDto
-import androidx.compose.foundation.*
-import androidx.compose.ui.platform.LocalContext
 import com.example.liftoff.data.repository.WorkoutRepository
 import kotlin.collections.*
 import com.example.liftoff.data.dto.WorkoutDto
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlinx.coroutines.*
 import com.example.liftoff.data.database.SupabaseService
-
-
+import com.example.liftoff.ui.components.*
 
 fun ExerciseTodo.toExerciseDto(): ExerciseDto {
     return ExerciseDto(
@@ -46,45 +35,6 @@ fun ExerciseTodo.toExerciseDto(): ExerciseDto {
         reps = this.reps,
         weight = this.weight
     )
-}
-
-@Composable
-fun WorkoutTodoCard (item: ExerciseTodo) {
-    Card (
-        border = BorderStroke(1.dp, Color.Black),
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth(),
-        colors = CardDefaults.cardColors (
-            containerColor = if (item.isDone) Color(0xFF98EC99) else Color.White
-        )) {
-        Column (
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                text = item.name,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            if (item.type == "timed") {
-                Text (
-                    text = "Duration: ${item.duration} mins",
-                    fontSize = 16.sp,
-                    color = Color.Gray
-                )
-            } else {
-                Text (
-                    text = "Sets: ${item.sets}          Reps: ${item.reps}          Weight: ${item.weight} lbs",
-                    fontSize = 16.sp,
-                    color = Color.Gray
-                )
-            }
-        }
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

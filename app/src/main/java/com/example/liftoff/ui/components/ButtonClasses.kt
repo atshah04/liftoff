@@ -1,9 +1,7 @@
 package com.example.liftoff.ui.components
 
 import androidx.compose.material3.Text
-import com.example.liftoff.ui.home.User
-import com.example.liftoff.ui.home.User_
-import com.example.liftoff.ui.home.Users
+import com.example.liftoff.data.classes.*
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
 import kotlinx.coroutines.Dispatchers

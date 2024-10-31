@@ -1,0 +1,13 @@
+package com.example.liftoff.data.classes
+
+import kotlinx.serialization.Serializable
+
+data class User_(val id: Int, val username: String, val password: String)
+data class Users(val users_information: List<User_>)
+
+@Serializable
+data class User (
+    val id: Int,
+    val username: String,
+    val password: String
+)

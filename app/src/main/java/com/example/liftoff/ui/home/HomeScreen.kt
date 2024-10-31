@@ -1,12 +1,7 @@
 package com.example.liftoff.ui.home
 
-import android.provider.ContactsContract
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,22 +13,13 @@ import androidx.compose.ui.unit.sp
 import com.example.liftoff.data.database.SupabaseService
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_KEY
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_URL
-import com.example.liftoff.data.dto.UserDto
+import com.example.liftoff.data.classes.*
 import com.example.liftoff.ui.navigation.GlobalState
-import io.github.jan.supabase.SupabaseClient
-import io.github.jan.supabase.auth.Auth
-import io.github.jan.supabase.createSupabaseClient
-import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
-import io.github.jan.supabase.storage.Storage
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.Serializable
-
-data class User_(val id: Int, val username: String, val password: String)
-data class Users(val users_information: List<User_>)
+import com.example.liftoff.ui.layout.*
 
 val supabase =
     SupabaseService.client
@@ -64,12 +50,6 @@ fun HomeScreen(gs: GlobalState) {
         }
     }
 }
-@Serializable
-data class User (
-    val id: Int,
-    val username: String,
-    val password: String
-)
 
 @Composable
 fun User_Information() {
@@ -116,7 +96,7 @@ fun User_Information() {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth().padding(top = 80.dp)
         ) {
-            DynamicColumn(items = data.value)
+            UserColumn(items = data.value)
         }
     }
 }
@@ -140,14 +120,3 @@ fun Card(session: Users) {
 
     }
 }
-
-@Composable
-fun DynamicColumn(items: List<Users>) {
-    Column {
-        items.forEach { session ->
-            Card(session)
-            Spacer(modifier = Modifier.height(3.dp))
-        }
-    }
-}
-

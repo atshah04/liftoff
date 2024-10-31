@@ -158,7 +158,6 @@ fun LoginPage(home: () -> Unit, setGlobals: (GlobalState) -> Unit) {
                 "Login Failed",
                 "Invalid credentials please try again.",
                 Icons.Default.Info)
-//            DynamicColumn(items = data.value)
         }
     }
 }
