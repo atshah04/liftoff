@@ -1,7 +1,7 @@
 package com.example.liftoff.ui.workouts
 
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
@@ -10,13 +10,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.graphics.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.runtime.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import com.example.liftoff.data.repository.UserRepository
 import com.example.liftoff.data.viewmodel.UserViewModel
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.LaunchedEffect
 
 
 data class Workout(val name: String, val reps: Int, val sets: Int)

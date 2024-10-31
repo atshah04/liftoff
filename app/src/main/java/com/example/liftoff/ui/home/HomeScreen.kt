@@ -20,7 +20,6 @@ import com.example.liftoff.data.database.SupabaseService
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_URL
 import com.example.liftoff.data.dto.UserDto
 import com.example.liftoff.ui.navigation.GlobalState
-import com.example.liftoff.ui.workouts.DynamicColumn
 import com.example.liftoff.ui.workouts.Workout
 import com.example.liftoff.ui.workouts.WorkoutSession
 import com.example.liftoff.ui.workouts.default_mod
@@ -120,17 +119,6 @@ fun User_Information() {
             DynamicColumn(items = data.value)
         }
     }
-
-// This inserts into the database. NOTE: right now if we insert duplicates twice the
-// app closes.
-
-//    LaunchedEffect(Unit) {
-//        withContext(Dispatchers.IO) {
-//            supabase.from("users").insert(mapOf("username" to "testing_1", "password" to "testing_1"))
-//        }
-//    }
-
-
 }
 
 @Composable
