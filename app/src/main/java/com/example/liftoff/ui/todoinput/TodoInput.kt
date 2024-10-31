@@ -185,7 +185,7 @@ fun WorkoutDropdownMenu(viewModel: WorkoutsTodoViewModel, onExerciseCreated: (Ex
                 .fillMaxWidth()
                 .padding(vertical = 16.dp)
         ) {
-            Text("Save Workout")
+            Text("Save Exercise")
         }
     }
 }

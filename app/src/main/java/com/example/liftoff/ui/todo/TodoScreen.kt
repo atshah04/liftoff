@@ -25,6 +25,25 @@ import androidx.navigation.NavHostController
 import com.example.liftoff.data.dto.ExerciseDto
 import androidx.compose.foundation.*
 import androidx.compose.ui.platform.LocalContext
+import com.example.liftoff.data.repository.WorkoutRepository
+import kotlin.collections.*
+import com.example.liftoff.data.dto.WorkoutDto
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlinx.coroutines.*
+
+fun ExerciseTodo.toExerciseDto(): ExerciseDto {
+    return ExerciseDto(
+        name = this.name,
+        type = this.type,
+        duration = this.duration,
+        sets = this.sets,
+        reps = this.reps,
+        weight = this.weight
+    )
+}
 
 @Composable
 fun WorkoutTodoCard (item: ExerciseTodo) {
@@ -117,12 +136,15 @@ fun ToDoItemRow (item : ExerciseTodo, viewModel : WorkoutsTodoViewModel) {
             viewModel.toggleComplete(item)
             kotlinx.coroutines.delay(100)
             dismissState.reset()
+        } else {
+            dismissState.reset()
         }
     }
 }
 
 @Composable
-fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewModel) {
+fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewModel, db: WorkoutRepository) {
+    val coroutineScope = rememberCoroutineScope()
 
     Column (modifier = Modifier
         .fillMaxSize()
@@ -160,6 +182,29 @@ fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewMode
             items(viewModel.todoItems) { item ->
                 ToDoItemRow(item, viewModel)
             }
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Button(
+            onClick = {
+                val exerciseDtoList: List<ExerciseDto> = viewModel.todoItems.map{it.toExerciseDto()}
+                val workout: WorkoutDto = WorkoutDto(
+                    userId = 6,
+                    name = "My Workout",
+                    exercises = exerciseDtoList,
+                    date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().time)
+                )
+                coroutineScope.launch {
+                    db.createWorkout(workout)
+                }
+                viewModel.todoItems.clear()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text("Save Workout")
         }
     }
 }

@@ -24,7 +24,7 @@ fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modi
 
     NavHost(navController, startDestination = BottomNavItem.Home.route, modifier = modifier) {
         composable(BottomNavItem.Home.route) { HomeScreen() }
-        composable(BottomNavItem.Todo.route) { TodoScreen(navController, sharedViewModel) }
+        composable(BottomNavItem.Todo.route) { TodoScreen(navController, sharedViewModel, WorkoutRepository(supabase)) }
         composable(BottomNavItem.Workouts.route) { WorkoutsScreen(WorkoutRepository(supabase)) }
         composable(BottomNavItem.Generate.route) { GenerateScreen() }
         composable(BottomNavItem.Friends.route) { FriendsScreen() }
