@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import com.example.liftoff.ui.navigation.NavHostContainer
 import androidx.navigation.compose.rememberNavController
 import com.example.liftoff.ui.navigation.BottomNavigationBar
-import com.example.liftoff.ui.navigation.GlobalState
+import com.example.liftoff.data.classes.GlobalState
 import androidx.compose.runtime.*
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-            val (gs, setGS) = remember { mutableStateOf(GlobalState(false, ""))}
+            val (gs, setGS) = remember { mutableStateOf(GlobalState(false, "", -1))}
             if (gs.loggedIn) {
                 Scaffold(bottomBar = { BottomNavigationBar(navController) }) { innerPadding ->
                     NavHostContainer(navController, Modifier.padding(innerPadding), gs, setGS)

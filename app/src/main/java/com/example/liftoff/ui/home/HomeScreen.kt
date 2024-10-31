@@ -14,7 +14,6 @@ import com.example.liftoff.data.database.SupabaseService
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_KEY
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_URL
 import com.example.liftoff.data.classes.*
-import com.example.liftoff.ui.navigation.GlobalState
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
 import kotlinx.coroutines.Dispatchers

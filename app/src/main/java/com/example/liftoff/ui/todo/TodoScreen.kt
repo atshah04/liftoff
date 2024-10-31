@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.navigation.NavHostController
+import com.example.liftoff.data.classes.GlobalState
 import com.example.liftoff.data.dto.ExerciseDto
 import com.example.liftoff.data.repository.WorkoutRepository
 import kotlin.collections.*
@@ -96,7 +97,7 @@ fun ToDoItemRow (item : ExerciseTodo, viewModel : WorkoutsTodoViewModel) {
 }
 
 @Composable
-fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewModel) {
+fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewModel, gs: GlobalState) {
     val coroutineScope = rememberCoroutineScope()
 
     Column (modifier = Modifier
@@ -142,11 +143,12 @@ fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewMode
         Button(
             onClick = {
                 val exerciseDtoList: List<ExerciseDto> = viewModel.todoItems.map{it.toExerciseDto()}
+                val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().time)
                 val workout: WorkoutDto = WorkoutDto(
-                    userId = 6,
-                    name = "My Workout",
+                    userId = gs.userId,
+                    name = "Workout on ${date}",
                     exercises = exerciseDtoList,
-                    date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().time)
+                    date = date
                 )
 
                 val supabase = SupabaseService.client

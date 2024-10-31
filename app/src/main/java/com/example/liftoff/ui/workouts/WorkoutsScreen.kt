@@ -13,6 +13,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import com.example.liftoff.data.classes.GlobalState
 import com.example.liftoff.data.dto.ExerciseDto
 import com.example.liftoff.data.dto.WorkoutDto
 import com.example.liftoff.data.repository.WorkoutRepository
@@ -20,14 +21,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @Composable
-fun WorkoutsScreen(db : WorkoutRepository) {
+fun WorkoutsScreen(db : WorkoutRepository, gs: GlobalState) {
     var workouts by remember { mutableStateOf(listOf<WorkoutDto>()) }
 
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
             // for now, we hard code fetching workouts done by userId 6
             // db.createWorkout(WorkoutDto(6,"timed","test before commit",15))
-            workouts = db.getWorkoutsByUserId(userId = 6).reversed()
+            workouts = db.getWorkoutsByUserId(userId = gs.userId).reversed()
         }
     }
 

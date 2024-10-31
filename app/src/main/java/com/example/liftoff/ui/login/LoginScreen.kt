@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
-import com.example.liftoff.ui.navigation.GlobalState
+import com.example.liftoff.data.classes.*
 
 data class User_(val id: Int, val username: String, val password: String)
 data class Users(val users_information: List<User_>)
@@ -64,6 +64,7 @@ data class User2 (
 fun LoginPage(home: () -> Unit, setGlobals: (GlobalState) -> Unit) {
     // Data that will be displayed on the cards
     var data = remember { mutableStateOf<List<Users>>(emptyList()) }
+    var (userid, setUserid) = remember { mutableStateOf(-1) }
     var (username, setUsername) = remember { mutableStateOf(TextFieldValue("")) }
     var (password, setPw) = remember { mutableStateOf(TextFieldValue("")) }
     var (loggedIn, setLoggedIn) = remember { mutableStateOf(false) }
@@ -113,6 +114,7 @@ fun LoginPage(home: () -> Unit, setGlobals: (GlobalState) -> Unit) {
                                     })
                                 )
                                 setLoggedIn(true)
+                                setUserid(data.value[0].users_information[0].id)
                             }
                         }
                     }
@@ -133,6 +135,14 @@ fun LoginPage(home: () -> Unit, setGlobals: (GlobalState) -> Unit) {
                                 supabase.from("users")
                                     .insert(User2(username.text, password.text))
                                 setLoggedIn(true)
+                                val results = supabase.from("users")
+                                    .select(columns = Columns.list("id", "username", "password")) {
+                                        filter {
+                                            eq("username", username.text)
+                                        }
+                                    }
+                                val users = results.decodeList<User>()
+                                setUserid(users[0].id)
                             } else {
                                 setAccountFail(true)
                             }
@@ -144,7 +154,7 @@ fun LoginPage(home: () -> Unit, setGlobals: (GlobalState) -> Unit) {
             }
             if (loggedIn) {
                 home()
-                setGlobals(GlobalState(true, username.text))
+                setGlobals(GlobalState(true, username.text, userid))
             }
             if (accountFail) Modal(
                 { setAccountFail(false)},
