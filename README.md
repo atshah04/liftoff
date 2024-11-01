@@ -20,4 +20,7 @@ https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Version-0.11-(-Release-1)
 
 https://git.uwaterloo.ca/atshah/team101-3/-/blob/fde125f873424427a2538da0b920e26827e4266b/app-debug.apk
 
+# Sprint 2 Release
+https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Version-0.12-(Release-2)
 
+https://git.uwaterloo.ca/atshah/team101-3/-/blob/main/release2.apk?ref_type=heads
