@@ -131,7 +131,7 @@ fun LoginPage(home: () -> Unit, setGlobals: (GlobalState) -> Unit) {
                                     }
                                 }
                             val users = results.decodeList<User>()
-                            if (users.isEmpty()) {
+                            if (users.isEmpty() && username.text != "" && password.text != "") {
                                 supabase.from("users")
                                     .insert(User2(username.text, password.text))
                                 setLoggedIn(true)
