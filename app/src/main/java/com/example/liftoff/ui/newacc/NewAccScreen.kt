@@ -1,4 +1,4 @@
-package com.example.liftoff.ui.login
+package com.example.liftoff.ui.newacc
 
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_KEY
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_URL
@@ -26,7 +26,7 @@ val supabase =
     SupabaseService.client
 
 @Composable
-fun LoginScreen(navFuncs: Map<String, ()->Unit>, login: (GlobalState) -> Unit) {
+fun NewAccScreen(navFuncs: Map<String, () -> Unit>, login: (GlobalState) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -38,21 +38,21 @@ fun LoginScreen(navFuncs: Map<String, ()->Unit>, login: (GlobalState) -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
         )
         {
-            TextL("LiftOff")
-            LoginPage(navFuncs, login)
+            TextL("New")
+            TextL("Account")
+            CreatePage(navFuncs, login)
         }
     }
 }
 
 @Composable
-fun LoginPage(navFuncs: Map<String, ()->Unit>, setGlobals: (GlobalState) -> Unit) {
+fun CreatePage(navFuncs: Map<String, () -> Unit>, setGlobals: (GlobalState) -> Unit) {
     // Data that will be displayed on the cards
     var data = remember { mutableStateOf<List<Users>>(emptyList()) }
     var (userid, setUserid) = remember { mutableStateOf(-1) }
     var (username, setUsername) = remember { mutableStateOf(TextFieldValue("")) }
     var (password, setPw) = remember { mutableStateOf(TextFieldValue("")) }
     var (loggedIn, setLoggedIn) = remember { mutableStateOf(false) }
-    var (logInFail, setLogInFail) = remember { mutableStateOf(false) }
     var (accountFail, setAccountFail) = remember { mutableStateOf(false) }
 
     val coroutineScope = rememberCoroutineScope()
@@ -76,39 +76,39 @@ fun LoginPage(navFuncs: Map<String, ()->Unit>, setGlobals: (GlobalState) -> Unit
                     .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween) {
                 Button(onClick = {
+                    navFuncs["login"]!!.invoke()
+                }) {
+                    Text("Back")
+                }
+                Button(onClick = {
                     coroutineScope.launch {
                         withContext(Dispatchers.IO) {
                             val results = supabase.from("users")
                                 .select(columns = Columns.list("id", "username", "password")) {
                                     filter {
                                         eq("username", username.text)
-                                        eq("password", password.text)
                                     }
                                 }
                             val users = results.decodeList<User>()
-                            if (users.isEmpty()) setLogInFail(true)
-                            else {
-                                data.value = listOf(
-                                    Users(users_information = users.map { user ->
-                                        User_(
-                                            id = user.id,
-                                            username = user.username,
-                                            password = user.password
-                                        )
-                                    })
-                                )
+                            if (users.isEmpty() && username.text != "" && password.text != "") {
+                                supabase.from("users")
+                                    .insert(User2(username.text, password.text))
                                 setLoggedIn(true)
-                                setUserid(data.value[0].users_information[0].id)
+                                val results = supabase.from("users")
+                                    .select(columns = Columns.list("id", "username", "password")) {
+                                        filter {
+                                            eq("username", username.text)
+                                        }
+                                    }
+                                val users = results.decodeList<User>()
+                                setUserid(users[0].id)
+                            } else {
+                                setAccountFail(true)
                             }
                         }
                     }
                 }) {
-                    Text("Log In")
-                }
-                Button(onClick = {
-                    navFuncs["newAcc"]!!.invoke()
-                }) {
-                    Text("Create Account")
+                    Text("Register Account")
                 }
             }
             if (loggedIn) {
@@ -120,12 +120,6 @@ fun LoginPage(navFuncs: Map<String, ()->Unit>, setGlobals: (GlobalState) -> Unit
                 { setAccountFail(false)},
                 "Account Creation Failed",
                 "User with username already exists, please try again.",
-                Icons.Default.Info)
-            if (logInFail) Modal(
-                { setLogInFail(false)},
-                { setLogInFail(false)},
-                "Login Failed",
-                "Invalid credentials please try again.",
                 Icons.Default.Info)
         }
     }

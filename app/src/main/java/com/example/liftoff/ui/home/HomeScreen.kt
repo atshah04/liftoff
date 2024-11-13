@@ -2,6 +2,7 @@ package com.example.liftoff.ui.home
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -51,7 +52,7 @@ val default_mod = Modifier
     .padding(16.dp)
 
 @Composable
-fun HomeScreen(gs: GlobalState) {
+fun HomeScreen(navFuncs: Map<String, () -> Unit>, gs: GlobalState, setGS: (GlobalState) -> Unit) {
     var quote by remember { mutableStateOf<Quote?>(null) }
 
     LaunchedEffect(Unit) {
@@ -69,10 +70,24 @@ fun HomeScreen(gs: GlobalState) {
         Column (
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
-
         )
 
         {
+            Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = "Hi, ${gs.username}",
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+                Button(onClick = {
+                    setGS(GlobalState(false, "", -1))
+                    navFuncs["login"]!!.invoke()
+                }, Modifier.padding(top = 16.dp)) {
+                    Text("Log Out")
+                }
+            }
             quote?.let {
                 Box(
                     modifier = Modifier

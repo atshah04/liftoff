@@ -21,16 +21,19 @@ import com.example.liftoff.ui.todoinput.TodoInputScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.liftoff.ui.login.LoginScreen
 import com.example.liftoff.data.classes.GlobalState
+import com.example.liftoff.ui.newacc.NewAccScreen
 
 @Composable
 fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modifier, gs: GlobalState, setGS: (GlobalState) -> Unit) {
     val supabase = SupabaseService.client
     val sharedViewModel = WorkoutsTodoViewModel()
+    val routes = listOf("home", "login", "newAcc")
+    val gsWrapper = { state: GlobalState -> setGS(state)  }
+    val navFuncs: Map<String, () -> Unit> = routes.associate { it to {navController.navigate(it)}}
     NavHost(navController, startDestination = "login", modifier = modifier) {
-        composable("login") { LoginScreen({
-            navController.navigate("home")
-        }, { state: GlobalState -> setGS(state)  }) }
-        composable(BottomNavItem.Home.route) { HomeScreen(gs) }
+        composable("login") { LoginScreen(navFuncs, gsWrapper) }
+        composable("newAcc") { NewAccScreen(navFuncs, gsWrapper) }
+        composable(BottomNavItem.Home.route) { HomeScreen(navFuncs, gs, gsWrapper) }
         composable(BottomNavItem.Todo.route) { TodoScreen(navController, sharedViewModel, gs) }
         composable(BottomNavItem.Workouts.route) { WorkoutsScreen(WorkoutRepository(supabase), gs) }
         composable(BottomNavItem.Generate.route) { GenerateScreen() }

@@ -12,6 +12,12 @@ data class User (
     val password: String
 )
 
+@Serializable
+data class User2(
+    val username: String,
+    val password: String
+)
+
 data class Quote(
     val content: String,
     val author: String,
