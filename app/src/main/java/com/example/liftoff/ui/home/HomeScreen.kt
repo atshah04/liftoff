@@ -60,7 +60,6 @@ fun HomeScreen(navFuncs: Map<String, () -> Unit>, gs: GlobalState, setGS: (Globa
 
     }
 
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -105,13 +104,6 @@ fun HomeScreen(navFuncs: Map<String, () -> Unit>, gs: GlobalState, setGS: (Globa
                 }
 
             }
-            Text(
-                text = "Hi, ${gs.username}",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.End,
-                modifier = Modifier.padding(top = 16.dp)
-            )
             User_Information()
         }
     }
