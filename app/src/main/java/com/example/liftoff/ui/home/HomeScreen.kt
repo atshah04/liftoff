@@ -1,11 +1,14 @@
 package com.example.liftoff.ui.home
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -19,6 +22,27 @@ import io.github.jan.supabase.postgrest.query.Columns
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.example.liftoff.ui.layout.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+
+
+suspend fun motivationalquotes(): Quote? {
+    val client = OkHttpClient()
+    val request = Request.Builder()
+        .url("https://api.realinspire.tech/v1/quotes/random")
+        .build()
+    return client.newCall(request).execute().use { response ->
+        val resp = response.body!!.string()
+        val gson = Gson()
+        val quoteListType = object : TypeToken<List<Quote>>() {}.type
+        val quotes: List<Quote> = gson.fromJson(resp, quoteListType)
+        quotes.first()
+    }
+    }
 
 val supabase =
     SupabaseService.client
@@ -28,6 +52,14 @@ val default_mod = Modifier
 
 @Composable
 fun HomeScreen(gs: GlobalState) {
+    var quote by remember { mutableStateOf<Quote?>(null) }
+
+    LaunchedEffect(Unit) {
+        CoroutineScope(Dispatchers.IO).launch {quote = motivationalquotes()}
+
+    }
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -35,9 +67,29 @@ fun HomeScreen(gs: GlobalState) {
         contentAlignment = Alignment.TopStart
     ) {
         Column (
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+
         )
+
         {
+            quote?.let {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
+                        .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
+                        .padding(20.dp)
+                ) {
+                    Text(
+                        text = "\"${it.content}\" - ${it.author}",
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+
+            }
             Text(
                 text = "Hi, ${gs.username}",
                 fontSize = 32.sp,
@@ -52,10 +104,10 @@ fun HomeScreen(gs: GlobalState) {
 
 @Composable
 fun User_Information() {
-    // can choose to use or not use remember when defining the mutablestate of lists
+
     val notes = remember { mutableStateListOf<User>() }
 
-    // Data that will be displayed on the cards
+
     var data = remember { mutableStateOf<List<Users>>(emptyList()) }
 
     LaunchedEffect(Unit) {

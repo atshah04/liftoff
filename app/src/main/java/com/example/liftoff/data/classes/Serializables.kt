@@ -11,3 +11,10 @@ data class User (
     val username: String,
     val password: String
 )
+
+data class Quote(
+    val content: String,
+    val author: String,
+    val authorSlug: String,
+    val length: Int
+)
