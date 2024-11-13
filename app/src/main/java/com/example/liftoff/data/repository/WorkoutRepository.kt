@@ -1,6 +1,5 @@
 package com.example.liftoff.data.repository
 
-import com.example.liftoff.data.dto.ExerciseDto
 import com.example.liftoff.data.dto.WorkoutDto
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.from
