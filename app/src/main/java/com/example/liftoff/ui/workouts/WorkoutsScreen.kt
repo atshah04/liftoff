@@ -104,6 +104,7 @@ fun StrengthExercises(strengthExercises: List<ExerciseDto>) {
             Text(text = "Name", modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
             Text(text = "Reps", modifier = Modifier.weight(0.5f), fontWeight = FontWeight.Bold)
             Text(text = "Sets", modifier = Modifier.weight(0.5f), fontWeight = FontWeight.Bold)
+            Text(text = "Weight", modifier = Modifier.weight(0.5f), fontWeight = FontWeight.Bold)
         }
 
         strengthExercises.forEach { exercise ->
@@ -111,6 +112,7 @@ fun StrengthExercises(strengthExercises: List<ExerciseDto>) {
                 Text(text = exercise.name, modifier = Modifier.weight(1f))
                 Text(text = exercise.reps?.toString() ?: "N/A", modifier = Modifier.weight(0.5f))
                 Text(text = exercise.sets?.toString() ?: "N/A", modifier = Modifier.weight(0.5f))
+                Text(text = exercise.weight?.toString() ?: "N/A", modifier = Modifier.weight(0.5f))
             }
         }
     }
