@@ -37,7 +37,7 @@ fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modi
         composable(BottomNavItem.Todo.route) { TodoScreen(navController, sharedViewModel, gs) }
         composable(BottomNavItem.Workouts.route) { WorkoutsScreen(WorkoutRepository(supabase), gs) }
         composable(BottomNavItem.Generate.route) { GenerateScreen() }
-        composable(BottomNavItem.Friends.route) { FriendsScreen() }
+        composable(BottomNavItem.Friends.route) { FriendsScreen(FriendsRepository(supabase), WorkoutRepository(supabase), gs) }
 
         composable("workout_input") {
             TodoInputScreen (sharedViewModel) { exerciseDto -> navController.popBackStack()  }
