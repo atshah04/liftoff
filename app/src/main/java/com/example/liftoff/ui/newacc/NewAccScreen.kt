@@ -76,7 +76,7 @@ fun CreatePage(navFuncs: Map<String, () -> Unit>, setGlobals: (GlobalState) -> U
                     .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween) {
                 Button(onClick = {
-                    navFuncs["login"]!!.invoke()
+                    navFuncs["options"]!!.invoke()
                 }) {
                     Text("Back")
                 }

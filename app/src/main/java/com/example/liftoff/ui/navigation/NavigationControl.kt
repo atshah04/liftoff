@@ -18,15 +18,17 @@ import com.example.liftoff.ui.login.LoginScreen
 import com.example.liftoff.data.classes.GlobalState
 import com.example.liftoff.data.repository.FriendsRepository
 import com.example.liftoff.ui.newacc.NewAccScreen
+import com.example.liftoff.ui.options.OptionsScreen
 
 @Composable
 fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modifier, gs: GlobalState, setGS: (GlobalState) -> Unit) {
     val supabase = SupabaseService.client
     val sharedViewModel = WorkoutsTodoViewModel()
-    val routes = listOf("home", "login", "newAcc")
+    val routes = listOf("options", "home", "login", "newAcc")
     val gsWrapper = { state: GlobalState -> setGS(state)  }
     val navFuncs: Map<String, () -> Unit> = routes.associate { it to {navController.navigate(it)}}
-    NavHost(navController, startDestination = "login", modifier = modifier) {
+    NavHost(navController, startDestination = "options", modifier = modifier) {
+        composable("options") { OptionsScreen(navFuncs, gsWrapper) }
         composable("login") { LoginScreen(navFuncs, gsWrapper) }
         composable("newAcc") { NewAccScreen(navFuncs, gsWrapper) }
         composable(BottomNavItem.Home.route) { HomeScreen(navFuncs, gs, gsWrapper) }

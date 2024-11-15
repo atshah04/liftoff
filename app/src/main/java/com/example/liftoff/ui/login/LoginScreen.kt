@@ -76,6 +76,11 @@ fun LoginPage(navFuncs: Map<String, ()->Unit>, setGlobals: (GlobalState) -> Unit
                     .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween) {
                 Button(onClick = {
+                    navFuncs["options"]!!.invoke()
+                }) {
+                    Text("Back")
+                }
+                Button(onClick = {
                     coroutineScope.launch {
                         withContext(Dispatchers.IO) {
                             val results = supabase.from("users")
@@ -104,11 +109,6 @@ fun LoginPage(navFuncs: Map<String, ()->Unit>, setGlobals: (GlobalState) -> Unit
                     }
                 }) {
                     Text("Log In")
-                }
-                Button(onClick = {
-                    navFuncs["newAcc"]!!.invoke()
-                }) {
-                    Text("Create Account")
                 }
             }
             if (loggedIn) {
