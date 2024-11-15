@@ -34,9 +34,10 @@ class FriendsRepository(private val supabase: SupabaseClient) {
     suspend fun addFriend(friend: FriendDto) = withContext(Dispatchers.IO) {
         supabase.from("friends")
             .insert(
-                mapOf(
-                    "user_id" to friend.userId,
-                    "friend_id" to friend.friendId
+                FriendDto(
+                    userId = friend.userId,
+                    friendId = friend.friendId,
+                    friendUsername = friend.friendUsername
                 )
             )
     }
