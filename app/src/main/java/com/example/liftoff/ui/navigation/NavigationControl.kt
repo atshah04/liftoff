@@ -1,8 +1,5 @@
 package com.example.liftoff.ui.navigation
 
-import android.provider.Settings.Global
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -15,12 +12,11 @@ import com.example.liftoff.ui.friends.FriendsScreen
 import com.example.liftoff.ui.generate.GenerateScreen
 import com.example.liftoff.ui.todo.TodoScreen
 import com.example.liftoff.ui.todo.WorkoutsTodoViewModel
-import com.example.liftoff.ui.todo.ExerciseTodo
 import com.example.liftoff.ui.workouts.WorkoutsScreen
 import com.example.liftoff.ui.todoinput.TodoInputScreen
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.liftoff.ui.login.LoginScreen
 import com.example.liftoff.data.classes.GlobalState
+import com.example.liftoff.data.repository.FriendsRepository
 import com.example.liftoff.ui.newacc.NewAccScreen
 
 @Composable
