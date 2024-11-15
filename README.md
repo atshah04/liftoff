@@ -24,3 +24,9 @@ https://git.uwaterloo.ca/atshah/team101-3/-/blob/fde125f873424427a2538da0b920e26
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Version-0.12-(Release-2)
 
 https://git.uwaterloo.ca/atshah/team101-3/-/blob/main/release2.apk?ref_type=heads
+
+# Sprint 3 Release
+https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Version-0.13-(Release-3)
+
+https://git.uwaterloo.ca/atshah/team101-3/-/blob/main/release3.apk?ref_type=heads
+
