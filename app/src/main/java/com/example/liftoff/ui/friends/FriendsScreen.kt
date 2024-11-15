@@ -172,15 +172,24 @@ fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, gs: GlobalStat
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(bottom = 3.dp)
                         )
-
+                        var hl = "-"
+                        var le = "-"
+                        var tt = "-"
+                        var ws = "-"
+                        if (heaviestLift != null) {
+                            hl = "${heaviestLift?.name} ${heaviestLift?.weight}"
+                        }
+                        if (longestExercise != null) {
+                            le = "${longestExercise?.name} ${longestExercise?.duration}"
+                        }
                         Column {
                             Row(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
                                 Text(
-                                    text = "Heaviest Lift: ${heaviestLift?.name} ${heaviestLift?.weight}",
+                                    text = "Heaviest Lift: " + hl,
                                     modifier = Modifier.weight(1f)
                                 )
                                 Text(
-                                    text = "Longest Workout: ${longestExercise?.name} ${longestExercise?.duration}",
+                                    text = "Longest Workout: " + le,
                                     modifier = Modifier.weight(0.5f)
                                 )
                                 Text(
