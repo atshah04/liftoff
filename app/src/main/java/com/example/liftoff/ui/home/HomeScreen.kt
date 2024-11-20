@@ -3,7 +3,6 @@ package com.example.liftoff.ui.home
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -18,6 +17,7 @@ import com.example.liftoff.data.database.SupabaseService
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_KEY
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_URL
 import com.example.liftoff.data.classes.*
+import com.example.liftoff.data.viewmodel.MainViewModel
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
 import kotlinx.coroutines.Dispatchers
@@ -52,8 +52,9 @@ val default_mod = Modifier
     .padding(16.dp)
 
 @Composable
-fun HomeScreen(navFuncs: Map<String, () -> Unit>, gs: GlobalState, setGS: (GlobalState) -> Unit) {
+fun HomeScreen(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel) {
     var quote by remember { mutableStateOf<Quote?>(null) }
+    val gs by mvm.gs.collectAsState()
 
     LaunchedEffect(Unit) {
         CoroutineScope(Dispatchers.IO).launch {quote = motivationalquotes()}
@@ -81,7 +82,7 @@ fun HomeScreen(navFuncs: Map<String, () -> Unit>, gs: GlobalState, setGS: (Globa
                     modifier = Modifier.padding(top = 16.dp)
                 )
                 Button(onClick = {
-                    setGS(GlobalState(false, "", -1))
+                    mvm.setGS(GlobalState(false, "", -1))
                     navFuncs["login"]!!.invoke()
                 }, Modifier.padding(top = 16.dp)) {
                     Text("Log Out")
@@ -113,8 +114,6 @@ fun HomeScreen(navFuncs: Map<String, () -> Unit>, gs: GlobalState, setGS: (Globa
 fun User_Information() {
 
     val notes = remember { mutableStateListOf<User>() }
-
-
     var data = remember { mutableStateOf<List<Users>>(emptyList()) }
 
     LaunchedEffect(Unit) {

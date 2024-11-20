@@ -13,16 +13,17 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import com.example.liftoff.data.classes.GlobalState
 import com.example.liftoff.data.dto.ExerciseDto
 import com.example.liftoff.data.dto.WorkoutDto
 import com.example.liftoff.data.repository.WorkoutRepository
+import com.example.liftoff.data.viewmodel.MainViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @Composable
-fun WorkoutsScreen(db : WorkoutRepository, gs: GlobalState) {
+fun WorkoutsScreen(db : WorkoutRepository, mvm: MainViewModel) {
     var workouts by remember { mutableStateOf(listOf<WorkoutDto>()) }
+    val gs = mvm.gs.value
 
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {

@@ -2,7 +2,6 @@ package com.example.liftoff.ui.newacc
 
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_KEY
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_URL
-import android.provider.Settings.Global
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -21,12 +20,15 @@ import kotlinx.coroutines.withContext
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import com.example.liftoff.data.classes.*
+import com.example.liftoff.data.viewmodel.LoginViewModel
+import com.example.liftoff.data.viewmodel.MainViewModel
+import com.example.liftoff.data.viewmodel.NewAccViewModel
 
 val supabase =
     SupabaseService.client
 
 @Composable
-fun NewAccScreen(navFuncs: Map<String, () -> Unit>, login: (GlobalState) -> Unit) {
+fun NewAccScreen(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel, navm: LoginViewModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -40,20 +42,27 @@ fun NewAccScreen(navFuncs: Map<String, () -> Unit>, login: (GlobalState) -> Unit
         {
             TextL("New")
             TextL("Account")
-            CreatePage(navFuncs, login)
+            CreatePage(navFuncs, mvm, navm)
         }
     }
 }
 
 @Composable
-fun CreatePage(navFuncs: Map<String, () -> Unit>, setGlobals: (GlobalState) -> Unit) {
+fun CreatePage(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel, navm: LoginViewModel) {
     // Data that will be displayed on the cards
-    var data = remember { mutableStateOf<List<Users>>(emptyList()) }
-    var (userid, setUserid) = remember { mutableStateOf(-1) }
-    var (username, setUsername) = remember { mutableStateOf(TextFieldValue("")) }
-    var (password, setPw) = remember { mutableStateOf(TextFieldValue("")) }
-    var (loggedIn, setLoggedIn) = remember { mutableStateOf(false) }
-    var (accountFail, setAccountFail) = remember { mutableStateOf(false) }
+    val data = remember { mutableStateOf<List<Users>>(emptyList()) }
+    val setUserid = { uid: Int -> navm.setUserId(uid)}
+    val userid by navm.userId.collectAsState()
+    val setUsername = { username: TextFieldValue -> navm.setUser(username) }
+    val username by navm.username.collectAsState()
+    val setPw = { pass: TextFieldValue -> navm.setPass(pass) }
+    val setLoggedIn = { isLoggedIn: Boolean -> navm.setLoggedIn(isLoggedIn) }
+    val setLogInFail = { logInFail: Boolean -> navm.setLogInFail(logInFail) }
+    val setAccountFail = { accFail: Boolean -> navm.setAccountFail(accFail) }
+    val password by navm.password.collectAsState()
+    val loggedIn by navm.loggedIn.collectAsState()
+    val logInFail by navm.logInFail.collectAsState()
+    val accountFail by navm.accountFail.collectAsState()
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -113,7 +122,10 @@ fun CreatePage(navFuncs: Map<String, () -> Unit>, setGlobals: (GlobalState) -> U
             }
             if (loggedIn) {
                 navFuncs["home"]!!.invoke()
-                setGlobals(GlobalState(true, username.text, userid))
+                setLoggedIn(false)
+                setUsername(TextFieldValue(""))
+                setPw(TextFieldValue(""))
+                mvm.setGS(GlobalState(true, username.text, userid))
             }
             if (accountFail) Modal(
                 { setAccountFail(false)},

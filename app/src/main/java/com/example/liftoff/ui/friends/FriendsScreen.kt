@@ -16,13 +16,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import com.example.liftoff.data.classes.GlobalState
 import com.example.liftoff.data.classes.User
 import com.example.liftoff.data.dto.ExerciseDto
 import com.example.liftoff.data.dto.FriendDto
 import com.example.liftoff.data.dto.WorkoutDto
 import com.example.liftoff.data.repository.FriendsRepository
 import com.example.liftoff.data.repository.WorkoutRepository
+import com.example.liftoff.data.viewmodel.FriendsViewModel
+import com.example.liftoff.data.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,22 +31,28 @@ import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
 
 @Composable
-fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, gs: GlobalState) {
-    var friends by remember { mutableStateOf(listOf<FriendDto>()) }
-    var filteredFriends by remember { mutableStateOf(listOf<FriendDto>()) }
-    var isSearchVisible by remember { mutableStateOf(false) }
-    var search by remember { mutableStateOf(TextFieldValue("")) }
-    var isAddingFriend by remember { mutableStateOf(false) }
+fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, mvm: MainViewModel, fvm : FriendsViewModel) {
+    val gs by mvm.gs.collectAsState()
+    val setFriends = { friendsList: List<FriendDto> -> fvm.setFriends(friendsList) }
+    val setFilteredFriends = { filteredList: List<FriendDto> -> fvm.setFilteredFriends(filteredList) }
+    val setSearchVisibility = { isVisible: Boolean -> fvm.setSearchVisibility(isVisible) }
+    val setSearchText = { searchText: TextFieldValue -> fvm.setSearchText(searchText) }
+    val setIsAddingFriend = { isAdding: Boolean -> fvm.setIsAddingFriend(isAdding) }
+    val friends by fvm.friends.collectAsState()
+    val filteredFriends by fvm.filteredFriends.collectAsState()
+    val isSearchVisible by fvm.isSearchVisible.collectAsState()
+    val search by fvm.search.collectAsState()
+    val isAddingFriend by fvm.isAddingFriend.collectAsState()
 
     LaunchedEffect(gs.userId) {
-        friends = dbf.getFriendsByUserId(userId = gs.userId)
-        filteredFriends = friends
+        setFriends(dbf.getFriendsByUserId(userId = gs.userId))
+        setFilteredFriends(filteredFriends)
     }
 
     LaunchedEffect(search) {
-        filteredFriends = if (search.text.isEmpty()) friends else {
+        setFilteredFriends(if (search.text.isEmpty()) friends else {
             friends.filter { it.friendUsername.contains(search.text, ignoreCase = true) }
-        }
+        })
     }
 
     Column(
@@ -69,7 +76,7 @@ fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, gs: GlobalStat
                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
             )
 
-            IconButton(onClick = { isSearchVisible = !isSearchVisible }) {
+            IconButton(onClick = { setSearchVisibility(!isSearchVisible) }) {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Search for Friends",
@@ -86,7 +93,7 @@ fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, gs: GlobalStat
             ) {
                 TextField(
                     value = search,
-                    onValueChange = { search = it },
+                    onValueChange = { setSearchText(it) },
                     placeholder = { Text(text = "Search...") },
                     modifier = Modifier
                         .weight(1f)
@@ -95,7 +102,7 @@ fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, gs: GlobalStat
                 )
 
                 Button(onClick = {
-                    isAddingFriend = true
+                    setIsAddingFriend(true)
 
                     CoroutineScope(Dispatchers.IO).launch {
                         val results = com.example.liftoff.ui.login.supabase.from("users")
@@ -112,10 +119,10 @@ fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, gs: GlobalStat
                             val newFriend = FriendDto(gs.userId, friendId = friendId, friendUsername = search.text)
                             dbf.addFriend(newFriend)
 
-                            friends = dbf.getFriendsByUserId(userId = gs.userId)
-                            filteredFriends = friends
+                            setFriends(dbf.getFriendsByUserId(userId = gs.userId))
+                            setFilteredFriends(filteredFriends)
                         }
-                        isAddingFriend = false
+                        setIsAddingFriend(false)
                     }
                 }) {
                     Text(text = "Add Friend")

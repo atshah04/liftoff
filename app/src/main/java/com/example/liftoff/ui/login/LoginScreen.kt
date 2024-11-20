@@ -2,7 +2,6 @@ package com.example.liftoff.ui.login
 
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_KEY
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_URL
-import android.provider.Settings.Global
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -21,12 +20,15 @@ import kotlinx.coroutines.withContext
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import com.example.liftoff.data.classes.*
+import com.example.liftoff.data.viewmodel.LoginViewModel
+import com.example.liftoff.data.viewmodel.MainViewModel
+import org.w3c.dom.Text
 
 val supabase =
     SupabaseService.client
 
 @Composable
-fun LoginScreen(navFuncs: Map<String, ()->Unit>, login: (GlobalState) -> Unit) {
+fun LoginScreen(navFuncs: Map<String, ()->Unit>, mvm: MainViewModel, lgvm: LoginViewModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -39,21 +41,26 @@ fun LoginScreen(navFuncs: Map<String, ()->Unit>, login: (GlobalState) -> Unit) {
         )
         {
             TextL("LiftOff")
-            LoginPage(navFuncs, login)
+            LoginPage(navFuncs, mvm, lgvm)
         }
     }
 }
 
 @Composable
-fun LoginPage(navFuncs: Map<String, ()->Unit>, setGlobals: (GlobalState) -> Unit) {
-    // Data that will be displayed on the cards
-    var data = remember { mutableStateOf<List<Users>>(emptyList()) }
-    var (userid, setUserid) = remember { mutableStateOf(-1) }
-    var (username, setUsername) = remember { mutableStateOf(TextFieldValue("")) }
-    var (password, setPw) = remember { mutableStateOf(TextFieldValue("")) }
-    var (loggedIn, setLoggedIn) = remember { mutableStateOf(false) }
-    var (logInFail, setLogInFail) = remember { mutableStateOf(false) }
-    var (accountFail, setAccountFail) = remember { mutableStateOf(false) }
+fun LoginPage(navFuncs: Map<String, ()->Unit>, mvm: MainViewModel, lgvm: LoginViewModel) {
+    val data = remember { mutableStateOf<List<Users>>(emptyList()) }
+    val setUserid = { uid: Int -> lgvm.setUserId(uid)}
+    val userid by lgvm.userId.collectAsState()
+    val setUsername = { username: TextFieldValue -> lgvm.setUser(username) }
+    val username by lgvm.username.collectAsState()
+    val setPw = { pass: TextFieldValue -> lgvm.setPass(pass) }
+    val setLoggedIn = { isLoggedIn: Boolean -> lgvm.setLoggedIn(isLoggedIn) }
+    val setLogInFail = { logInFail: Boolean -> lgvm.setLogInFail(logInFail) }
+    val setAccountFail = { accFail: Boolean -> lgvm.setAccountFail(accFail) }
+    val password by lgvm.password.collectAsState()
+    val loggedIn by lgvm.loggedIn.collectAsState()
+    val logInFail by lgvm.logInFail.collectAsState()
+    val accountFail by lgvm.accountFail.collectAsState()
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -113,7 +120,10 @@ fun LoginPage(navFuncs: Map<String, ()->Unit>, setGlobals: (GlobalState) -> Unit
             }
             if (loggedIn) {
                 navFuncs["home"]!!.invoke()
-                setGlobals(GlobalState(true, username.text, userid))
+                setLoggedIn(false)
+                setUsername(TextFieldValue(""))
+                setPw(TextFieldValue(""))
+                mvm.setGS(GlobalState(true, username.text, userid))
             }
             if (accountFail) Modal(
                 { setAccountFail(false)},

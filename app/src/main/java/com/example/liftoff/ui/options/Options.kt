@@ -4,17 +4,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.liftoff.data.classes.GlobalState
 import com.example.liftoff.ui.components.TextL
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.example.liftoff.R
 import androidx.compose.foundation.Image
 
 @Composable
-fun OptionsScreen(navFuncs: Map<String, ()->Unit>, setGlobals: (GlobalState) -> Unit) {
+fun OptionsScreen(navFuncs: Map<String, ()->Unit>) {
     Box(
         modifier = Modifier
             .fillMaxSize()
