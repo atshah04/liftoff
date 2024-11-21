@@ -27,8 +27,7 @@ fun WorkoutsScreen(db : WorkoutRepository, mvm: MainViewModel) {
 
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
-            // for now, we hard code fetching workouts done by userId 6
-            // db.createWorkout(WorkoutDto(6,"timed","test before commit",15))
+
             workouts = db.getWorkoutsByUserId(userId = gs.userId).reversed()
         }
     }
