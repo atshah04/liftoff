@@ -1,6 +1,5 @@
 package com.example.liftoff.ui.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -16,6 +15,7 @@ import com.example.liftoff.ui.todo.WorkoutsTodoViewModel
 import com.example.liftoff.ui.workouts.WorkoutsScreen
 import com.example.liftoff.ui.todoinput.TodoInputScreen
 import com.example.liftoff.ui.login.LoginScreen
+import com.example.liftoff.data.classes.GlobalState
 import com.example.liftoff.data.repository.FriendsRepository
 import com.example.liftoff.data.viewmodel.FriendsViewModel
 import com.example.liftoff.data.viewmodel.LoginViewModel
@@ -44,5 +44,4 @@ fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modi
             TodoInputScreen (sharedViewModel) { exerciseDto -> navController.popBackStack()  }
         }
     }
-
 }

@@ -18,6 +18,7 @@ class MainActivity : ComponentActivity() {
     private val lgvm : LoginViewModel by viewModels()
     private val navm : LoginViewModel by viewModels()
     private val fvm : FriendsViewModel by viewModels()
+    private val gvm: GenerateViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
