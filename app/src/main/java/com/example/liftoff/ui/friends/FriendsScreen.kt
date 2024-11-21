@@ -181,8 +181,6 @@ fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, mvm: MainViewM
                         )
                         var hl = "-"
                         var le = "-"
-                        var tt = "-"
-                        var ws = "-"
                         if (heaviestLift != null) {
                             hl = "${heaviestLift?.name} ${heaviestLift?.weight}"
                         }

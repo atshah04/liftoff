@@ -28,6 +28,17 @@ fun TextL(txt: String) {
 }
 
 @Composable
+fun TextS(txt: String) {
+    Text(
+        text = txt,
+        fontSize = 24.sp,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+    )
+}
+
+
+@Composable
 fun TextH(txt: String) {
     Text(
         text = txt,

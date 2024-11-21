@@ -18,6 +18,7 @@ import com.example.liftoff.data.database.SupabaseService
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_URL
 import com.example.liftoff.data.classes.*
 import com.example.liftoff.data.viewmodel.MainViewModel
+import com.example.liftoff.ui.components.*
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +30,12 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+import com.example.liftoff.R
+import java.lang.Thread.sleep
 
 
 suspend fun motivationalquotes(): Quote? {
@@ -58,7 +65,6 @@ fun HomeScreen(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel) {
 
     LaunchedEffect(Unit) {
         CoroutineScope(Dispatchers.IO).launch {quote = motivationalquotes()}
-
     }
 
     Box(
@@ -69,18 +75,11 @@ fun HomeScreen(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel) {
     ) {
         Column (
             modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.End
         )
 
         {
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = "Hi, ${gs.username}",
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.padding(top = 16.dp)
-                )
                 Button(onClick = {
                     mvm.setGS(GlobalState(false, "", -1))
                     navFuncs["login"]!!.invoke()
@@ -105,55 +104,68 @@ fun HomeScreen(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel) {
                 }
 
             }
-            User_Information()
+            User_Information(gs)
         }
     }
 }
 
 @Composable
-fun User_Information() {
+fun User_Information(gs: GlobalState) {
 
     val notes = remember { mutableStateListOf<User>() }
-    var data = remember { mutableStateOf<List<Users>>(emptyList()) }
+    var data = remember { mutableStateOf<List<Int>>(emptyList()) }
+    var queried = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
-            val id = 6
-            val results = supabase.from("users")
-                .select(columns = Columns.list("id", "username", "password")) {
+            val week_back = Calendar.getInstance()
+            week_back.add(Calendar.HOUR_OF_DAY, -7*24)
+            val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(week_back.time)
+            val results = supabase.from("workouts")
+                .select(columns = Columns.list("id")) {
                     filter {
-                        eq("id", id)
+                        eq("user_id", gs.userId)
+                        gt("date", date)
                     }
                 }
-            val users = results.decodeList<User>()
-            notes.addAll(users)
+            val ids = results.decodeList<Id>()
 
-            data.value = listOf(
-                Users(users_information = users.map { user ->
-                    User_(id = user.id, username = user.username, password = user.password)
-                }))
-
+            data.value = ids.map { id -> id.id }
+            queried.value = true
         }
     }
-
 
     Box(modifier = Modifier
         .fillMaxSize()
         .padding(16.dp),
         contentAlignment = Alignment.TopStart) {
-        Text(
-            text = "User Information",
-            fontSize = 32.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.End,
-            modifier = Modifier.padding(top = 16.dp)
-        )
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth().padding(top = 80.dp)
         ) {
-            UserColumn(items = data.value)
+            Text(
+                text = "Hi, ${gs.username}",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.End,
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            if (data.value?.isNotEmpty() == true && queried.value) {
+                TextS("You're on a hot streak this week!")
+                Image(
+                    painter = painterResource(id = R.drawable.fire_emoji),
+                    contentDescription = "Liftoff Logo",
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+            else if (queried.value) {
+                TextS("Let's get you started with a workout!")
+                Image(
+                    painter = painterResource(id = R.drawable.rocket_emoji),
+                    contentDescription = "Liftoff Logo",
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
     }
 }

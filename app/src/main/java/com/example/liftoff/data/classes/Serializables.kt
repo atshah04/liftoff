@@ -24,3 +24,8 @@ data class Quote(
     val authorSlug: String,
     val length: Int
 )
+
+@Serializable
+data class Id(
+    val id: Int
+)
