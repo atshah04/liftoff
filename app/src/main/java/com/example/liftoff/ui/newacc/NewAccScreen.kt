@@ -2,6 +2,7 @@ package com.example.liftoff.ui.newacc
 
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_KEY
 //import com.example.liftoff.data.database.SupabaseService.SUPABASE_URL
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -19,6 +20,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.ui.res.painterResource
+import com.example.liftoff.R
 import com.example.liftoff.data.classes.*
 import com.example.liftoff.data.viewmodel.LoginViewModel
 import com.example.liftoff.data.viewmodel.MainViewModel
@@ -40,8 +43,6 @@ fun NewAccScreen(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel, navm: Lo
             horizontalAlignment = Alignment.CenterHorizontally,
         )
         {
-            TextL("New")
-            TextL("Account")
             CreatePage(navFuncs, mvm, navm)
         }
     }
@@ -76,10 +77,13 @@ fun CreatePage(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel, navm: Logi
                 .fillMaxWidth()
                 .padding(top = 80.dp)
         ) {
-            TextH("Username")
-            DefaultTextField(username, setUsername)
-            TextH("Password")
-            PassTextField(password, setPw)
+            Image(
+                painter = painterResource(id = R.drawable.logo_final1),
+                contentDescription = "Liftoff Logo",
+                modifier = Modifier.fillMaxWidth(),
+            )
+            DefaultTextField(username, setUsername, "Username")
+            PassTextField(password, setPw, "Password")
             Row (
                 Modifier.width(250.dp)
                     .padding(top = 16.dp),

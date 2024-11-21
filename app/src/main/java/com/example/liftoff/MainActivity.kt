@@ -1,6 +1,5 @@
 package com.example.liftoff
 
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,7 +11,6 @@ import com.example.liftoff.ui.navigation.NavHostContainer
 import androidx.navigation.compose.rememberNavController
 import com.example.liftoff.ui.navigation.BottomNavigationBar
 import androidx.compose.runtime.*
-import androidx.compose.ui.unit.dp
 import com.example.liftoff.data.viewmodel.*
 
 class MainActivity : ComponentActivity() {

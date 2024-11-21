@@ -1,5 +1,6 @@
 package com.example.liftoff.ui.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -33,25 +34,28 @@ fun TextH(txt: String) {
         fontSize = 32.sp,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.End,
-        modifier = Modifier.padding(top = 16.dp)
+        modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
     )
 }
 
 @Composable
-fun DefaultTextField(str: TextFieldValue, fn: (TextFieldValue) -> Unit) {
+fun DefaultTextField(str: TextFieldValue, fn: (TextFieldValue) -> Unit, placeholder: String = "") {
     OutlinedTextField(
         value = str,
         onValueChange = { fn(it) },
+        placeholder = { Text(text = placeholder) },
+        modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
     )
 }
 
 @Composable
-fun PassTextField(str: TextFieldValue, fn: (TextFieldValue) -> Unit) {
+fun PassTextField(str: TextFieldValue, fn: (TextFieldValue) -> Unit, placeholder: String = "") {
     OutlinedTextField(
         value = str,
         onValueChange = { fn(it) },
         visualTransformation = PasswordVisualTransformation(),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        placeholder = { Text(text = placeholder) },
     )
 }
 

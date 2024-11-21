@@ -24,18 +24,17 @@ fun OptionsScreen(navFuncs: Map<String, ()->Unit>) {
             horizontalAlignment = Alignment.CenterHorizontally,
         )
         {
-            TextL("LiftOff")
-            Image(
-                painter = painterResource(id = R.drawable.liftoff_logo3),
-                contentDescription = "Liftoff Logo",
-                modifier = Modifier.fillMaxWidth(),
-//                contentScale = ContentScale.Fit
-            )
             Column(modifier = Modifier.fillMaxWidth()
-                .fillMaxHeight(), verticalArrangement = Arrangement.Center,
+                                    .fillMaxHeight(0.8f), verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally) {
+                Image(
+                    painter = painterResource(id = R.drawable.logo_final1),
+                    contentDescription = "Liftoff Logo",
+                    modifier = Modifier.fillMaxWidth(),
+                )
                 Row(verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.padding(top = 16.dp)) {
                     Button(onClick = { navFuncs["login"]!!.invoke() }, Modifier.width(150.dp).height(50.dp)) {
                         Text("Log in")
                     }
