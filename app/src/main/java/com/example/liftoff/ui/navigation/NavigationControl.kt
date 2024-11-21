@@ -17,16 +17,13 @@ import com.example.liftoff.ui.todoinput.TodoInputScreen
 import com.example.liftoff.ui.login.LoginScreen
 import com.example.liftoff.data.classes.GlobalState
 import com.example.liftoff.data.repository.FriendsRepository
-import com.example.liftoff.data.viewmodel.FriendsViewModel
-import com.example.liftoff.data.viewmodel.LoginViewModel
-import com.example.liftoff.data.viewmodel.MainViewModel
-import com.example.liftoff.data.viewmodel.NewAccViewModel
+import com.example.liftoff.data.viewmodel.*
 import com.example.liftoff.ui.newacc.NewAccScreen
 import com.example.liftoff.ui.options.OptionsScreen
 
 @Composable
 fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modifier, mvm: MainViewModel, lgvm: LoginViewModel, navm: LoginViewModel,
-                    fvm: FriendsViewModel) {
+                    fvm: FriendsViewModel, gvm: GenerateViewModel) {
     val supabase = SupabaseService.client
     val sharedViewModel = WorkoutsTodoViewModel()
     val routes = listOf("options", "home", "login", "newAcc")
@@ -38,7 +35,7 @@ fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modi
         composable(BottomNavItem.Home.route) { HomeScreen(navFuncs, mvm) }
         composable(BottomNavItem.Todo.route) { TodoScreen(navController, sharedViewModel, mvm) }
         composable(BottomNavItem.Workouts.route) { WorkoutsScreen(WorkoutRepository(supabase), mvm) }
-        composable(BottomNavItem.Generate.route) { GenerateScreen() }
+        composable(BottomNavItem.Generate.route) { GenerateScreen(navFuncs, gvm) }
         composable(BottomNavItem.Friends.route) { FriendsScreen(FriendsRepository(supabase), WorkoutRepository(supabase), mvm, fvm) }
         composable("workout_input") {
             TodoInputScreen (sharedViewModel) { exerciseDto -> navController.popBackStack()  }

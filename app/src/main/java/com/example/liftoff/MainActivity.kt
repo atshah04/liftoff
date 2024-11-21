@@ -1,5 +1,6 @@
 package com.example.liftoff
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,15 +21,16 @@ class MainActivity : ComponentActivity() {
     private val fvm : FriendsViewModel by viewModels()
     private val gvm: GenerateViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         super.onCreate(savedInstanceState)
         setContent {
             val gs = mvm.gs.collectAsState()
             val navController = rememberNavController()
             if (gs.value.loggedIn) {
                 Scaffold(bottomBar = { BottomNavigationBar(navController) }) { innerPadding ->
-                    NavHostContainer(navController, Modifier.padding(innerPadding), mvm, lgvm, navm, fvm)
+                    NavHostContainer(navController, Modifier.padding(innerPadding), mvm, lgvm, navm, fvm, gvm)
                 }
-            } else NavHostContainer(navController, Modifier.padding(), mvm, lgvm, navm, fvm)
+            } else NavHostContainer(navController, Modifier.padding(), mvm, lgvm, navm, fvm, gvm)
         }
     }
 }

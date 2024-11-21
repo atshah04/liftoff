@@ -151,7 +151,8 @@ fun User_Information(gs: GlobalState) {
                 modifier = Modifier.padding(top = 16.dp)
             )
             if (data.value?.isNotEmpty() == true && queried.value) {
-                TextS("You're on a hot streak this week!")
+                TextS("You're on a hot streak of ${data.value?.size} this week!")
+                Spacer(modifier = Modifier.height(24.dp))
                 Image(
                     painter = painterResource(id = R.drawable.fire_emoji),
                     contentDescription = "Liftoff Logo",
@@ -160,6 +161,7 @@ fun User_Information(gs: GlobalState) {
             }
             else if (queried.value) {
                 TextS("Let's get you started with a workout!")
+                Spacer(modifier = Modifier.height(24.dp))
                 Image(
                     painter = painterResource(id = R.drawable.rocket_emoji),
                     contentDescription = "Liftoff Logo",
