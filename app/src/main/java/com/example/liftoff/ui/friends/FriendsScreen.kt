@@ -1,5 +1,6 @@
 package com.example.liftoff.ui.friends
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.*
@@ -13,9 +14,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import com.example.liftoff.R
 import com.example.liftoff.data.classes.User
 import com.example.liftoff.data.dto.ExerciseDto
 import com.example.liftoff.data.dto.FriendDto
@@ -29,6 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
+import androidx.compose.ui.text.*
 
 @Composable
 fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, mvm: MainViewModel, fvm : FriendsViewModel) {
@@ -187,24 +191,114 @@ fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, mvm: MainViewM
                         if (longestExercise != null) {
                             le = "${longestExercise?.name} ${longestExercise?.duration}"
                         }
+                        Spacer(modifier = Modifier.height(16.dp))
                         Column {
                             Row(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
-                                Text(
-                                    text = "Heaviest Lift: " + hl,
-                                    modifier = Modifier.weight(1f)
-                                )
-                                Text(
-                                    text = "Longest Workout: " + le,
-                                    modifier = Modifier.weight(0.5f)
-                                )
-                                Text(
-                                    text = "Time Spent: $totalTime",
-                                    modifier = Modifier.weight(0.5f)
-                                )
-                                Text(
-                                    text = "Total Workouts: ${workouts.size}",
-                                    modifier = Modifier.weight(0.5f)
-                                )
+                                Column(
+                                    modifier = Modifier.weight(1f),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.bicep),
+                                        contentDescription = "Heaviest lift",
+                                        modifier = Modifier.size(60.dp),
+                                    )
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    Text(
+                                        text = buildAnnotatedString {
+                                            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                                                append("Heaviest Strength Lift: ")
+                                            }
+                                            append(hl)
+                                        },
+                                        modifier = Modifier.width(100.dp),
+                                        fontSize = 16.sp,
+                                        textAlign = TextAlign.Center
+                                        )
+                                }
+
+                                Column(
+                                    modifier = Modifier.weight(1f),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+
+                                    Image(
+                                        painter = painterResource(id = R.drawable.clock),
+                                        contentDescription = "Longest Workout",
+                                        modifier = Modifier.size(60.dp),
+                                    )
+                                    Spacer(modifier = Modifier.height(8.dp))
+
+                                    Text(
+                                        text = buildAnnotatedString {
+                                            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                                                append("Longest Workout: ")
+                                            }
+                                            append(le)
+                                        },
+                                        modifier = Modifier.width(100.dp),
+                                        fontSize = 16.sp,
+                                        textAlign = TextAlign.Center
+
+                                    )
+                                }
+                            }
+
+                            Row(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
+
+                                Column(
+                                    modifier = Modifier.weight(1f),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+
+                                    Image(
+                                        painter = painterResource(id = R.drawable.hourglass),
+                                        contentDescription = "Time spent",
+                                        modifier = Modifier.size(60.dp),
+                                    )
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    Text(
+
+                                        text = buildAnnotatedString {
+                                            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                                                append("Time Spent: ")
+                                            }
+                                            append("$totalTime")
+                                        },
+                                        modifier = Modifier.width(100.dp),
+                                        fontSize = 16.sp,
+                                        textAlign = TextAlign.Center
+
+                                    )
+                                }
+                                Column(
+                                    modifier = Modifier.weight(1f),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+
+                                    Image(
+                                        painter = painterResource(id = R.drawable.lifting),
+                                        contentDescription = "total workouts",
+                                        modifier = Modifier.size(60.dp),
+                                    )
+                                    Spacer(modifier = Modifier.height(8.dp))
+
+                                    Text(
+                                        text = buildAnnotatedString {
+                                            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                                                append("Total Workouts: ")
+                                            }
+                                            append("${workouts.size}")
+                                        },
+
+                                        modifier = Modifier.width(100.dp),
+                                        fontSize = 16.sp,
+                                        textAlign = TextAlign.Center
+
+                                    )
+
+                                }
+
                             }
                         }
                     }

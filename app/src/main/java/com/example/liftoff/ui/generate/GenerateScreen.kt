@@ -1,5 +1,6 @@
 package com.example.liftoff.ui.generate
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -27,7 +28,9 @@ import kotlinx.coroutines.withContext
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Checkbox
 import androidx.compose.runtime.*
+import androidx.compose.ui.res.painterResource
 import androidx.core.text.isDigitsOnly
+import com.example.liftoff.R
 import com.example.liftoff.data.viewmodel.GenerateViewModel
 import com.example.liftoff.ui.navigation.BottomNavItem
 import com.example.liftoff.ui.todo.ExerciseTodo
@@ -47,6 +50,32 @@ fun GenerateScreen(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel, tdvm
             horizontalAlignment = Alignment.CenterHorizontally,
         )
         {
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.rocket_emoji),
+                    contentDescription = "Liftoff Logo",
+                    modifier = Modifier.size(50.dp),
+                )
+
+                Image(
+                    painter = painterResource(id = R.drawable.rocket_emoji),
+                    contentDescription = "Liftoff Logo",
+                    modifier = Modifier.size(50.dp),
+                )
+
+                Image(
+                    painter = painterResource(id = R.drawable.rocket_emoji),
+                    contentDescription = "Liftoff Logo",
+                    modifier = Modifier.size(50.dp),
+                )
+
+            }
+
             TextH("Generate Workout")
             Generate(navFuncs, gvm, tdvm)
         }
