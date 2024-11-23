@@ -27,10 +27,15 @@ import kotlinx.coroutines.withContext
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Checkbox
 import androidx.compose.runtime.*
+import androidx.core.text.isDigitsOnly
 import com.example.liftoff.data.viewmodel.GenerateViewModel
+import com.example.liftoff.ui.navigation.BottomNavItem
+import com.example.liftoff.ui.todo.ExerciseTodo
+import com.example.liftoff.ui.todo.WorkoutsTodoViewModel
+import org.w3c.dom.Text
 
 @Composable
-fun GenerateScreen(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel) {
+fun GenerateScreen(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel, tdvm: WorkoutsTodoViewModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -42,25 +47,53 @@ fun GenerateScreen(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
         )
         {
-            Text(
-                text = "Generate Workout",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.End,
-
-            )
-            Generate(navFuncs, gvm)
+            TextH("Generate Workout")
+            Generate(navFuncs, gvm, tdvm)
         }
     }
 }
 
+fun validate_inputs(weight: TextFieldValue, minutes: TextFieldValue): Boolean {
+    if (!weight.text.isDigitsOnly()) return false
+    if (!minutes.text.isDigitsOnly()) return false
+    return weight.text.isNotEmpty() && weight.text.isNotEmpty()
+}
+
 @Composable
-fun Generate(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel) {
+fun Generate(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel, tdvm: WorkoutsTodoViewModel) {
     val Exercices = gvm.Exercices
+    val weight by gvm.weight.collectAsState()
     val miniutesInput by gvm.minutesInput.collectAsState()
     val checkedStates by gvm.checkedStates.collectAsState()
+    val error by gvm.error.collectAsState()
+    val override by gvm.override.collectAsState()
     val setminutesInput = { input: TextFieldValue -> gvm.setMinutesInput(input) }
     val setCheckedState = { index: Int, state: Boolean -> gvm.setCheckedState(index, state) }
+    val setWeight = { input: TextFieldValue -> gvm.setWeightInput(input) }
+    val setError = { err: Boolean -> gvm.setError(err) }
+    val setOverride = { over: Boolean -> gvm.setOverride(over) }
+    val exportTodo = { numChecked: Int ->
+        tdvm.todoItems.clear()
+        for (i in 0..Exercices.size-1) {
+            if (checkedStates[i]) {
+                tdvm.todoItems.add(
+                    ExerciseTodo(
+                        Exercices[i],
+                        "Strength",
+                        null,
+                        miniutesInput.text.toInt() / numChecked,
+                        5,
+                        weight.text.toDouble(),
+                        false,
+                        1
+                    )
+                )
+            }
+        }
+        setminutesInput(TextFieldValue(""))
+        setWeight(TextFieldValue(""))
+        navFuncs[BottomNavItem.Todo.route]!!.invoke()
+    }
 
     Box(
         modifier = Modifier
@@ -73,42 +106,21 @@ fun Generate(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 80.dp)
         ) {
-            Text(
-                text = "How Many Minutes Do You Want The Workout To Be?",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-
-            )
-            DefaultTextField(miniutesInput, setminutesInput)
-            Row(
-                Modifier
-                    .width(250.dp)
-                    .padding(top = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-
-                Button(onClick = {
-
-
-                }) {
-                    Text("How Many Minutes Do You Want The Workout To Be ?")
-                }
-            }
+            TextS("Minutes for workout")
+            DefaultTextField(miniutesInput, setminutesInput, "Minutes")
+            TextS("Weight per exercise (kg)")
+            DefaultTextField(weight, setWeight, "Weight")
             val stringminutes = miniutesInput.text
             val minutesInt = stringminutes.toIntOrNull()
-
             Text(
-                text = "Check the Workouts That You Want!",
+                text = "Check the Workouts That You Want:",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = 18.dp)
 
             )
-
             Column {
                 checkedStates.forEachIndexed { index, part ->
                     Row(
@@ -144,11 +156,51 @@ fun Generate(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel) {
             }
 
             Text(text = "Selected Exercises: ${selectedParts.joinToString(", ")}")
-
-
+            Button(onClick = {
+                if (!validate_inputs(weight, miniutesInput)) {
+                    setError(true)
+                } else {
+                    var numChecked = 0
+                    for (i in 0..Exercices.size-1) {
+                        if (checkedStates[i]) numChecked += 1
+                    }
+                    if (numChecked == 0) {
+                        setError(true)
+                    } else if (tdvm.todoItems.size > 0) {
+                        setOverride(true)
+                    } else {
+                        exportTodo(numChecked)
+                    }
+                }
+            }) {
+                Text("Export to Todo")
             }
-
+            if (override) {
+                Modal(
+                    { setOverride(false)},
+                    { setOverride(false)
+                        var numChecked = 0
+                        for (i in 0..Exercices.size-1) {
+                            if (checkedStates[i]) numChecked += 1
+                        }
+                        exportTodo(numChecked)
+                    },
+                    "WARNING",
+                    "Exporting this list to todo will override your current todo list, are you sure you want to proceed?",
+                    Icons.Default.Info
+                )
+            }
+            if (error) {
+                Modal(
+                    { setError(false)},
+                    { setError(false)},
+                    "Invalid fields entered",
+                    "Weight and time must be non-negative, non-empty and you must select at least one workout.",
+                    Icons.Default.Info
+                )
+            }
         }
-
     }
+
+}
 

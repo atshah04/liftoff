@@ -2,6 +2,7 @@ package com.example.liftoff.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,11 +24,16 @@ import com.example.liftoff.ui.options.OptionsScreen
 
 @Composable
 fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modifier, mvm: MainViewModel, lgvm: LoginViewModel, navm: LoginViewModel,
-                    fvm: FriendsViewModel, gvm: GenerateViewModel) {
+                    fvm: FriendsViewModel, gvm: GenerateViewModel, tdvm: WorkoutsTodoViewModel) {
     val supabase = SupabaseService.client
     val sharedViewModel = WorkoutsTodoViewModel()
-    val routes = listOf("options", "home", "login", "newAcc")
-    val navFuncs: Map<String, () -> Unit> = routes.associate { it to {navController.navigate(it)}}
+    val routes = listOf("options", "home", "login", "newAcc", BottomNavItem.Todo.route)
+    val navFuncs: Map<String, () -> Unit> = routes.associate {
+        it to {navController.navigate(it) {
+            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+            launchSingleTop = true
+            restoreState = true
+    } }}
     NavHost(navController, startDestination = "options", modifier = modifier) {
         composable("options") { OptionsScreen(navFuncs) }
         composable("login") { LoginScreen(navFuncs, mvm, lgvm) }
@@ -35,7 +41,7 @@ fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modi
         composable(BottomNavItem.Home.route) { HomeScreen(navFuncs, mvm) }
         composable(BottomNavItem.Todo.route) { TodoScreen(navController, sharedViewModel, mvm) }
         composable(BottomNavItem.Workouts.route) { WorkoutsScreen(WorkoutRepository(supabase), mvm) }
-        composable(BottomNavItem.Generate.route) { GenerateScreen(navFuncs, gvm) }
+        composable(BottomNavItem.Generate.route) { GenerateScreen(navFuncs, gvm, sharedViewModel) }
         composable(BottomNavItem.Friends.route) { FriendsScreen(FriendsRepository(supabase), WorkoutRepository(supabase), mvm, fvm) }
         composable("workout_input") {
             TodoInputScreen (sharedViewModel) { exerciseDto -> navController.popBackStack()  }

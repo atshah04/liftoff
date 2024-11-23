@@ -25,7 +25,6 @@ import com.example.liftoff.R
 import com.example.liftoff.data.classes.*
 import com.example.liftoff.data.viewmodel.LoginViewModel
 import com.example.liftoff.data.viewmodel.MainViewModel
-import com.example.liftoff.data.viewmodel.NewAccViewModel
 
 val supabase =
     SupabaseService.client
@@ -60,6 +59,8 @@ fun CreatePage(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel, navm: Logi
     val setLoggedIn = { isLoggedIn: Boolean -> navm.setLoggedIn(isLoggedIn) }
     val setLogInFail = { logInFail: Boolean -> navm.setLogInFail(logInFail) }
     val setAccountFail = { accFail: Boolean -> navm.setAccountFail(accFail) }
+    val toggleVisible = { navm.toggleVisibility() }
+    val visible by navm.visible.collectAsState()
     val password by navm.password.collectAsState()
     val loggedIn by navm.loggedIn.collectAsState()
     val logInFail by navm.logInFail.collectAsState()
@@ -83,7 +84,7 @@ fun CreatePage(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel, navm: Logi
                 modifier = Modifier.fillMaxWidth(),
             )
             DefaultTextField(username, setUsername, "Username")
-            PassTextField(password, setPw, "Password")
+            PassTextField(password, setPw, "Password", visible, toggleVisible)
             Row (
                 Modifier.width(250.dp)
                     .padding(top = 16.dp),

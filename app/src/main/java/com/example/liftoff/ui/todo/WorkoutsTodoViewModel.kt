@@ -7,6 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 
 @Stable
 data class ExerciseTodo(
@@ -20,7 +21,7 @@ data class ExerciseTodo(
     val id: Int
 )
 
-class WorkoutsTodoViewModel () {
+class WorkoutsTodoViewModel: ViewModel() {
     var curId = 0
     val todoItems = mutableStateListOf<ExerciseTodo>();
 

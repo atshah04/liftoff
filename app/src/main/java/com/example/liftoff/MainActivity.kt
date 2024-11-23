@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.liftoff.ui.navigation.BottomNavigationBar
 import androidx.compose.runtime.*
 import com.example.liftoff.data.viewmodel.*
+import com.example.liftoff.ui.todo.WorkoutsTodoViewModel
 
 class MainActivity : ComponentActivity() {
     private val mvm: MainViewModel by viewModels()
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
     private val navm : LoginViewModel by viewModels()
     private val fvm : FriendsViewModel by viewModels()
     private val gvm: GenerateViewModel by viewModels()
+    private val tdvm : WorkoutsTodoViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         super.onCreate(savedInstanceState)
@@ -28,9 +30,9 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             if (gs.value.loggedIn) {
                 Scaffold(bottomBar = { BottomNavigationBar(navController) }) { innerPadding ->
-                    NavHostContainer(navController, Modifier.padding(innerPadding), mvm, lgvm, navm, fvm, gvm)
+                    NavHostContainer(navController, Modifier.padding(innerPadding), mvm, lgvm, navm, fvm, gvm, tdvm)
                 }
-            } else NavHostContainer(navController, Modifier.padding(), mvm, lgvm, navm, fvm, gvm)
+            } else NavHostContainer(navController, Modifier.padding(), mvm, lgvm, navm, fvm, gvm, tdvm)
         }
     }
 }

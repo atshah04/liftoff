@@ -59,6 +59,8 @@ fun LoginPage(navFuncs: Map<String, ()->Unit>, mvm: MainViewModel, lgvm: LoginVi
     val setLoggedIn = { isLoggedIn: Boolean -> lgvm.setLoggedIn(isLoggedIn) }
     val setLogInFail = { logInFail: Boolean -> lgvm.setLogInFail(logInFail) }
     val setAccountFail = { accFail: Boolean -> lgvm.setAccountFail(accFail) }
+    val toggleVisible = { lgvm.toggleVisibility() }
+    val visible by lgvm.visible.collectAsState()
     val password by lgvm.password.collectAsState()
     val loggedIn by lgvm.loggedIn.collectAsState()
     val logInFail by lgvm.logInFail.collectAsState()
@@ -82,7 +84,7 @@ fun LoginPage(navFuncs: Map<String, ()->Unit>, mvm: MainViewModel, lgvm: LoginVi
                 modifier = Modifier.fillMaxWidth(),
             )
             DefaultTextField(username, setUsername, "Username")
-            PassTextField(password, setPw, "Password")
+            PassTextField(password, setPw, "Password", visible, toggleVisible)
             Row (
                 Modifier.width(250.dp)
                     .padding(top = 16.dp),
