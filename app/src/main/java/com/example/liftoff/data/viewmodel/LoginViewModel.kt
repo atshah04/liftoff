@@ -28,6 +28,9 @@ class LoginViewModel : ViewModel() {
     private val _accountFail = MutableStateFlow(false)
     val accountFail: StateFlow<Boolean> get() = _accountFail
 
+    private val _visible = MutableStateFlow(false)
+    val visible: StateFlow<Boolean> get() = _visible
+
     fun setData(data: List<Users>) {
         _data.value = data
     }
@@ -53,4 +56,6 @@ class LoginViewModel : ViewModel() {
     fun setAccountFail(accFail: Boolean) {
         _accountFail.value = accFail
     }
+
+    fun toggleVisibility() { _visible.value = !_visible.value }
 }
