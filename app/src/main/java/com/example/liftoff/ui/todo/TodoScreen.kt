@@ -141,30 +141,32 @@ fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewMode
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Button(
-            onClick = {
-                val exerciseDtoList: List<ExerciseDto> = viewModel.todoItems.map{it.toExerciseDto()}
-                val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().time)
-                val workout: WorkoutDto = WorkoutDto(
-                    userId = gs.userId,
-                    name = "Workout on ${date}",
-                    exercises = exerciseDtoList,
-                    date = date
-                )
+        if (viewModel.todoItems.size > 0) {
+            Button(
+                onClick = {
+                    val exerciseDtoList: List<ExerciseDto> = viewModel.todoItems.map{it.toExerciseDto()}
+                    val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().time)
+                    val workout: WorkoutDto = WorkoutDto(
+                        userId = gs.userId,
+                        name = "Workout on ${date}",
+                        exercises = exerciseDtoList,
+                        date = date
+                    )
 
-                val supabase = SupabaseService.client
-                val db: WorkoutRepository = WorkoutRepository(supabase)
+                    val supabase = SupabaseService.client
+                    val db: WorkoutRepository = WorkoutRepository(supabase)
 
-                coroutineScope.launch {
-                    db.createWorkout(workout)
-                }
-                viewModel.todoItems.clear()
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            Text("Save Workout")
+                    coroutineScope.launch {
+                        db.createWorkout(workout)
+                    }
+                    viewModel.todoItems.clear()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Text("Save Workout")
+            }
         }
     }
 }
