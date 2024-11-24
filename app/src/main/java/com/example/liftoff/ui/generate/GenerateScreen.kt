@@ -85,7 +85,7 @@ fun GenerateScreen(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel, tdvm
 fun validate_inputs(weight: TextFieldValue, minutes: TextFieldValue): Boolean {
     if (!weight.text.isDigitsOnly()) return false
     if (!minutes.text.isDigitsOnly()) return false
-    return weight.text.isNotEmpty() && weight.text.isNotEmpty()
+    return weight.text.isNotEmpty() && minutes.text.isNotEmpty()
 }
 
 @Composable
