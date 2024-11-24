@@ -22,6 +22,11 @@ class FriendsViewModel : ViewModel() {
     private val _isAddingFriend = MutableStateFlow(false)
     val isAddingFriend: StateFlow<Boolean> get() = _isAddingFriend
 
+    private val _notFound = MutableStateFlow(false)
+    val notFound: StateFlow<Boolean> get() = _notFound
+
+    fun setFound(found: Boolean) { _notFound.value = found }
+
     // Setter functions to modify the state
     fun setFriends(friendsList: List<FriendDto>) {
         _friends.value = friendsList

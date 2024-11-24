@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
 import androidx.compose.ui.text.*
+import com.example.liftoff.ui.components.Modal
 
 @Composable
 fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, mvm: MainViewModel, fvm : FriendsViewModel) {
@@ -42,6 +43,8 @@ fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, mvm: MainViewM
     val setSearchVisibility = { isVisible: Boolean -> fvm.setSearchVisibility(isVisible) }
     val setSearchText = { searchText: TextFieldValue -> fvm.setSearchText(searchText) }
     val setIsAddingFriend = { isAdding: Boolean -> fvm.setIsAddingFriend(isAdding) }
+    val setNotFound = { notFound: Boolean -> fvm.setFound(notFound) }
+    val notFound by fvm.notFound.collectAsState()
     val friends by fvm.friends.collectAsState()
     val filteredFriends by fvm.filteredFriends.collectAsState()
     val isSearchVisible by fvm.isSearchVisible.collectAsState()
@@ -125,6 +128,8 @@ fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, mvm: MainViewM
 
                             setFriends(dbf.getFriendsByUserId(userId = gs.userId))
                             setFilteredFriends(filteredFriends)
+                        } else {
+                            setNotFound(true)
                         }
                         setIsAddingFriend(false)
                     }
@@ -133,7 +138,15 @@ fun FriendsScreen(dbf: FriendsRepository, dbw: WorkoutRepository, mvm: MainViewM
                 }
             }
         }
-
+        if (notFound) {
+            Modal(
+                { setNotFound(false)},
+                { setNotFound(false) },
+                "WARNING",
+                "Friend not found.",
+                Icons.Default.Info
+            )
+        }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
