@@ -99,7 +99,7 @@ fun ToDoItemRow (item : ExerciseTodo, viewModel : WorkoutsTodoViewModel) {
 @Composable
 fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewModel, mvm: MainViewModel) {
     val coroutineScope = rememberCoroutineScope()
-    val gs = mvm.gs.value
+    val gs = mvm.gs.collectAsState()
 
     Column (modifier = Modifier
         .fillMaxSize()
@@ -147,7 +147,7 @@ fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewMode
                     val exerciseDtoList: List<ExerciseDto> = viewModel.todoItems.map{it.toExerciseDto()}
                     val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().time)
                     val workout: WorkoutDto = WorkoutDto(
-                        userId = gs.userId,
+                        userId = gs.value.userId,
                         name = "Workout on ${date}",
                         exercises = exerciseDtoList,
                         date = date

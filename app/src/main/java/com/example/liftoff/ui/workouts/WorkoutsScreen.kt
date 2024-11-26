@@ -23,12 +23,12 @@ import kotlinx.coroutines.withContext
 @Composable
 fun WorkoutsScreen(db : WorkoutRepository, mvm: MainViewModel) {
     var workouts by remember { mutableStateOf(listOf<WorkoutDto>()) }
-    val gs = mvm.gs.value
+    val gs = mvm.gs.collectAsState()
 
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
 
-            workouts = db.getWorkoutsByUserId(userId = gs.userId).reversed()
+            workouts = db.getWorkoutsByUserId(userId = gs.value.userId).reversed()
         }
     }
 
