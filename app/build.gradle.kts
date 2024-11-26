@@ -96,8 +96,10 @@ dependencies {
     implementation(libs.auth.kt)
     implementation(libs.storage.kt)
     implementation(libs.ktor.client.android)
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.google.code.gson:gson:2.8.8")
+    implementation("com.google.accompanist:accompanist-permissions:0.31.1-alpha")
 
     //implementation(platform("io.github.jan-tennert.supabase:bom:3.0.1"))
     //implementation("io.github.jan-tennert.supabase:postgrest-kt")

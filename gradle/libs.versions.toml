@@ -22,6 +22,8 @@ kotlinxSerializationJson = "1.6.2"
 composeCompiler = "1.5.2"
 storageKt = "3.0.1"
 mockk = "1.12.0"
+accompanist_permissions = "0.31.1-alpha"
+work_manager = "2.8.1"
 
 [libraries]
 auth-kt = { module = "io.github.jan-tennert.supabase:auth-kt", version.ref = "authKt" }
@@ -51,6 +53,9 @@ ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "k
 postgrest-kt = { module = "io.github.jan-tennert.supabase:postgrest-kt", version.ref = "authKt" }
 storage-kt = { module = "io.github.jan-tennert.supabase:storage-kt", version.ref = "storageKt" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk"}
+accompanist_permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist_permissions" }
+work_manager = { module = "androidx.work:work-runtime-ktx", version.ref = "work_manager" }
+
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
