@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.6.1" type="baseline" client="gradle" dependencies="false" name="AGP (8.6.1)" variant="all" version="8.6.1">
+
+    <issue
+        id="ObsoleteLintCustomCheck"
+        message="Library lint checks reference invalid APIs; these checks **will be skipped**!&#xA;&#xA;Lint found an issue registry (`androidx.navigation.common.lint.NavigationCommonIssueRegistry`)&#xA;which contains some references to invalid API:&#xA;com.android.tools.lint.checks.infrastructure.TestFiles: com.android.tools.lint.checks.infrastructure.TestFile bytecode(java.lang.String,com.android.tools.lint.checks.infrastructure.TestFile,long,java.lang.String[])&#xA;(Referenced from androidx/navigation/lint/common/LintUtilKt.class)&#xA;&#xA;Therefore, this lint check library is **not** included&#xA;in analysis. This affects the following lint checks:&#xA;`EmptyNavDeepLink`,`WrongStartDestinationType`&#xA;&#xA;To use this lint check, upgrade to a more recent version&#xA;of the library.">
+        <location
+            file="$GRADLE_USER_HOME/caches/8.9/transforms/e790467769739fc8937cee5fd492dbe9/transformed/navigation-common-2.8.2/jars/lint.jar"/>
+    </issue>
+
+    <issue
+        id="ObsoleteLintCustomCheck"
+        message="Library lint checks reference invalid APIs; these checks **will be skipped**!&#xA;&#xA;Lint found an issue registry (`androidx.navigation.compose.lint.NavigationComposeIssueRegistry`)&#xA;which contains some references to invalid API:&#xA;com.android.tools.lint.checks.infrastructure.TestFiles: com.android.tools.lint.checks.infrastructure.TestFile bytecode(java.lang.String,com.android.tools.lint.checks.infrastructure.TestFile,long,java.lang.String[])&#xA;(Referenced from androidx/navigation/lint/common/LintUtilKt.class)&#xA;&#xA;Therefore, this lint check library is **not** included&#xA;in analysis. This affects the following lint checks:&#xA;`ComposableDestinationInComposeScope`,`ComposableNavGraphInComposeScope`,`UnrememberedGetBackStackEntry`,`WrongStartDestinationType`&#xA;&#xA;To use this lint check, upgrade to a more recent version&#xA;of the library.">
+        <location
+            file="$GRADLE_USER_HOME/caches/8.9/transforms/5a6b30bca0f5c864c2c8ba7fc75636e1/transformed/navigation-compose-2.8.2/jars/lint.jar"/>
+    </issue>
+
+    <issue
+        id="ObsoleteLintCustomCheck"
+        message="Library lint checks reference invalid APIs; these checks **will be skipped**!&#xA;&#xA;Lint found an issue registry (`androidx.navigation.runtime.lint.NavigationRuntimeIssueRegistry`)&#xA;which contains some references to invalid API:&#xA;com.android.tools.lint.checks.infrastructure.TestFiles: com.android.tools.lint.checks.infrastructure.TestFile bytecode(java.lang.String,com.android.tools.lint.checks.infrastructure.TestFile,long,java.lang.String[])&#xA;(Referenced from androidx/navigation/lint/common/LintUtilKt.class)&#xA;&#xA;Therefore, this lint check library is **not** included&#xA;in analysis. This affects the following lint checks:&#xA;`DeepLinkInActivityDestination`,`WrongStartDestinationType`,`WrongNavigateRouteType`&#xA;&#xA;To use this lint check, upgrade to a more recent version&#xA;of the library.">
+        <location
+            file="$GRADLE_USER_HOME/caches/8.9/transforms/9fe009ab70785fd2fddd94d878ed3ee0/transformed/navigation-runtime-2.8.2/jars/lint.jar"/>
+    </issue>
+
+    <issue
+        id="RedundantLabel"
+        message="Redundant label can be removed"
+        errorLine1="                android:label=&quot;@string/app_name&quot;>"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="24"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 8.6.1 is available: 8.7.2"
+        errorLine1="agp = &quot;8.6.1&quot;"
+        errorLine2="      ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="10"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 8.6.1 is available: 8.7.2"
+        errorLine1="agp = &quot;8.6.1&quot;"
+        errorLine2="      ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="10"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 8.6.1 is available: 8.7.2"
+        errorLine1="agp = &quot;8.6.1&quot;"
+        errorLine2="      ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="10"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.work:work-runtime-ktx than 2.8.1 is available: 2.10.0"
+        errorLine1="    implementation(&quot;androidx.work:work-runtime-ktx:2.8.1&quot;)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="103"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.code.gson:gson than 2.8.8 is available: 2.10.1"
+        errorLine1="    implementation(&quot;com.google.code.gson:gson:2.8.8&quot;)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="105"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-serialization-json than 1.7.1 is available: 1.7.3"
+        errorLine1="json-version = &quot;1.7.1&quot;"
+        errorLine2="               ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="8"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-serialization-json than 1.7.1 is available: 1.7.3"
+        errorLine1="json-version = &quot;1.7.1&quot;"
+        errorLine2="               ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="8"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-serialization-json than 1.7.1 is available: 1.7.3"
+        errorLine1="json-version = &quot;1.7.1&quot;"
+        errorLine2="               ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="8"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.core:core-ktx than 1.13.1 is available: 1.15.0"
+        errorLine1="coreKtx = &quot;1.13.1&quot;"
+        errorLine2="          ~~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="11"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.core:core-ktx than 1.13.1 is available: 1.15.0"
+        errorLine1="coreKtx = &quot;1.13.1&quot;"
+        errorLine2="          ~~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="11"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.core:core-ktx than 1.13.1 is available: 1.15.0"
+        errorLine1="coreKtx = &quot;1.13.1&quot;"
+        errorLine2="          ~~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="11"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.8.5 is available: 2.8.7"
+        errorLine1="lifecycleRuntimeKtx = &quot;2.8.5&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="15"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.8.5 is available: 2.8.7"
+        errorLine1="lifecycleRuntimeKtx = &quot;2.8.5&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="15"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.8.5 is available: 2.8.7"
+        errorLine1="lifecycleRuntimeKtx = &quot;2.8.5&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="15"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.activity:activity-compose than 1.9.2 is available: 1.9.3"
+        errorLine1="activityCompose = &quot;1.9.2&quot;"
+        errorLine2="                  ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="16"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.activity:activity-compose than 1.9.2 is available: 1.9.3"
+        errorLine1="activityCompose = &quot;1.9.2&quot;"
+        errorLine2="                  ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="16"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.activity:activity-compose than 1.9.2 is available: 1.9.3"
+        errorLine1="activityCompose = &quot;1.9.2&quot;"
+        errorLine2="                  ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="16"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose:compose-bom than 2024.04.01 is available: 2024.11.00"
+        errorLine1="composeBom = &quot;2024.04.01&quot;"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="17"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose:compose-bom than 2024.04.01 is available: 2024.11.00"
+        errorLine1="composeBom = &quot;2024.04.01&quot;"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="17"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose:compose-bom than 2024.04.01 is available: 2024.11.00"
+        errorLine1="composeBom = &quot;2024.04.01&quot;"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="17"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-compose than 2.8.2 is available: 2.8.4"
+        errorLine1="navigationCompose = &quot;2.8.2&quot;"
+        errorLine2="                    ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="18"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-compose than 2.8.2 is available: 2.8.4"
+        errorLine1="navigationCompose = &quot;2.8.2&quot;"
+        errorLine2="                    ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="18"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-compose than 2.8.2 is available: 2.8.4"
+        errorLine1="navigationCompose = &quot;2.8.2&quot;"
+        errorLine2="                    ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="18"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-fragment-ktx than 2.6.0 is available: 2.8.4"
+        errorLine1="navigationFragmentKtx = &quot;2.6.0&quot;"
+        errorLine2="                        ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="19"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-fragment-ktx than 2.6.0 is available: 2.8.4"
+        errorLine1="navigationFragmentKtx = &quot;2.6.0&quot;"
+        errorLine2="                        ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="19"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-fragment-ktx than 2.6.0 is available: 2.8.4"
+        errorLine1="navigationFragmentKtx = &quot;2.6.0&quot;"
+        errorLine2="                        ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="19"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-ui-ktx than 2.6.0 is available: 2.8.4"
+        errorLine1="navigationUiKtx = &quot;2.6.0&quot;"
+        errorLine2="                  ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="20"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-ui-ktx than 2.6.0 is available: 2.8.4"
+        errorLine1="navigationUiKtx = &quot;2.6.0&quot;"
+        errorLine2="                  ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="20"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-ui-ktx than 2.6.0 is available: 2.8.4"
+        errorLine1="navigationUiKtx = &quot;2.6.0&quot;"
+        errorLine2="                  ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="20"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-serialization-json than 1.6.2 is available: 1.7.3"
+        errorLine1="kotlinxSerializationJson = &quot;1.6.2&quot;"
+        errorLine2="                           ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="21"
+            column="28"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-serialization-json than 1.6.2 is available: 1.7.3"
+        errorLine1="kotlinxSerializationJson = &quot;1.6.2&quot;"
+        errorLine2="                           ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="21"
+            column="28"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-serialization-json than 1.6.2 is available: 1.7.3"
+        errorLine1="kotlinxSerializationJson = &quot;1.6.2&quot;"
+        errorLine2="                           ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="21"
+            column="28"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.compiler:compiler than 1.5.2 is available: 1.5.15"
+        errorLine1="composeCompiler = &quot;1.5.2&quot;"
+        errorLine2="                  ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="22"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.compiler:compiler than 1.5.2 is available: 1.5.15"
+        errorLine1="composeCompiler = &quot;1.5.2&quot;"
+        errorLine2="                  ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="22"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.compiler:compiler than 1.5.2 is available: 1.5.15"
+        errorLine1="composeCompiler = &quot;1.5.2&quot;"
+        errorLine2="                  ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="22"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.work:work-runtime-ktx than 2.8.1 is available: 2.10.0"
+        errorLine1="work_manager = &quot;2.8.1&quot;"
+        errorLine2="               ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="26"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.work:work-runtime-ktx than 2.8.1 is available: 2.10.0"
+        errorLine1="work_manager = &quot;2.8.1&quot;"
+        errorLine2="               ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="26"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.work:work-runtime-ktx than 2.8.1 is available: 2.10.0"
+        errorLine1="work_manager = &quot;2.8.1&quot;"
+        errorLine2="               ~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="26"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="SimilarGradleDependency"
+        message="There are multiple dependencies org.jetbrains.kotlinx:kotlinx-serialization-json but with different version"
+        errorLine1="json = { module = &quot;org.jetbrains.kotlinx:kotlinx-serialization-json&quot;, version.ref = &quot;json-version&quot; }"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="31"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="SimilarGradleDependency"
+        message="There are multiple dependencies org.jetbrains.kotlinx:kotlinx-serialization-json but with different version"
+        errorLine1="json = { module = &quot;org.jetbrains.kotlinx:kotlinx-serialization-json&quot;, version.ref = &quot;json-version&quot; }"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="31"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="SimilarGradleDependency"
+        message="There are multiple dependencies org.jetbrains.kotlinx:kotlinx-serialization-json but with different version"
+        errorLine1="json = { module = &quot;org.jetbrains.kotlinx:kotlinx-serialization-json&quot;, version.ref = &quot;json-version&quot; }"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="31"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="SimilarGradleDependency"
+        message="There are multiple dependencies org.jetbrains.kotlinx:kotlinx-serialization-json but with different version"
+        errorLine1="kotlinx-serialization-json = { module = &quot;org.jetbrains.kotlinx:kotlinx-serialization-json&quot;, version.ref = &quot;kotlinxSerializationJson&quot; }"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="50"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="SimilarGradleDependency"
+        message="There are multiple dependencies org.jetbrains.kotlinx:kotlinx-serialization-json but with different version"
+        errorLine1="kotlinx-serialization-json = { module = &quot;org.jetbrains.kotlinx:kotlinx-serialization-json&quot;, version.ref = &quot;kotlinxSerializationJson&quot; }"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="50"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="SimilarGradleDependency"
+        message="There are multiple dependencies org.jetbrains.kotlinx:kotlinx-serialization-json but with different version"
+        errorLine1="kotlinx-serialization-json = { module = &quot;org.jetbrains.kotlinx:kotlinx-serialization-json&quot;, version.ref = &quot;kotlinxSerializationJson&quot; }"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/Documents/University of Waterloo/Third Year/Term 3A/CS 346/LiftOff/team101-3/gradle/libs.versions.toml"
+            line="50"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="SourceLockedOrientationActivity"
+        message="You should not lock orientation of your activities, so that you can support a good user experience for any device or orientation"
+        errorLine1="        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/example/liftoff/MainActivity.kt"
+            line="24"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="StateFlowValueCalledInComposition"
+        message="StateFlow.value should not be called within composition"
+        errorLine1="    val gs = mvm.gs.value"
+        errorLine2="                    ~~~~~">
+        <location
+            file="src/main/java/com/example/liftoff/ui/todo/TodoScreen.kt"
+            line="102"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="StateFlowValueCalledInComposition"
+        message="StateFlow.value should not be called within composition"
+        errorLine1="    val gs = mvm.gs.value"
+        errorLine2="                    ~~~~~">
+        <location
+            file="src/main/java/com/example/liftoff/ui/workouts/WorkoutsScreen.kt"
+            line="26"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="AutoboxingStateCreation"
+        message="Prefer `mutableIntStateOf` instead of `mutableStateOf`"
+        errorLine1="                var totalTime by remember { mutableStateOf(0) }"
+        errorLine2="                                            ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/example/liftoff/ui/friends/FriendsScreen.kt"
+            line="141"
+            column="45"/>
+    </issue>
+
+    <issue
+        id="AutoboxingStateCreation"
+        message="Prefer `mutableIntStateOf` instead of `mutableStateOf`"
+        errorLine1="    var hour by remember { mutableStateOf(0) }"
+        errorLine2="                           ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/example/liftoff/ui/home/HomeScreen.kt"
+            line="128"
+            column="28"/>
+    </issue>
+
+    <issue
+        id="AutoboxingStateCreation"
+        message="Prefer `mutableIntStateOf` instead of `mutableStateOf`"
+        errorLine1="    var minute by remember { mutableStateOf(0) }"
+        errorLine2="                             ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/example/liftoff/ui/home/HomeScreen.kt"
+            line="129"
+            column="30"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.menu.bottom_nav_menu` appears to be unused"
+        errorLine1="&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/menu/bottom_nav_menu.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.activity_horizontal_margin` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;activity_horizontal_margin&quot;>16dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="3"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.activity_vertical_margin` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;activity_vertical_margin&quot;>16dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="4"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_dashboard_black_24dp` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_dashboard_black_24dp.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_notifications_black_24dp` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_notifications_black_24dp.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.liftoff_logo2` appears to be unused">
+        <location
+            file="src/main/res/drawable/liftoff_logo2.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.liftoff_logo3` appears to be unused">
+        <location
+            file="src/main/res/drawable/liftoff_logo3.jpeg"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.title_home` appears to be unused"
+        errorLine1="    &lt;string name=&quot;title_home&quot;>Home&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="3"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.title_dashboard` appears to be unused"
+        errorLine1="    &lt;string name=&quot;title_dashboard&quot;>Dashboard&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="4"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.title_notifications` appears to be unused"
+        errorLine1="    &lt;string name=&quot;title_notifications&quot;>Notifications&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="5"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/fire_emoji.webp` in densityless folder">
+        <location
+            file="src/main/res/drawable/fire_emoji.webp"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/liftoff_logo2.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/liftoff_logo2.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/liftoff_logo3.jpeg` in densityless folder">
+        <location
+            file="src/main/res/drawable/liftoff_logo3.jpeg"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/logo_final1.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/logo_final1.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/rocket_emoji.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/rocket_emoji.png"/>
+    </issue>
+
+    <issue
+        id="UseTomlInstead"
+        message="Use the existing version catalog reference (`libs.work.manager`) instead"
+        errorLine1="    implementation(&quot;androidx.work:work-runtime-ktx:2.8.1&quot;)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="103"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="UseTomlInstead"
+        message="Use version catalog instead"
+        errorLine1="    implementation(&quot;com.squareup.okhttp3:okhttp:4.9.3&quot;)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="104"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="UseTomlInstead"
+        message="Use version catalog instead"
+        errorLine1="    implementation(&quot;com.google.code.gson:gson:2.8.8&quot;)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="105"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="UseTomlInstead"
+        message="Use the existing version catalog reference (`libs.accompanist.permissions`) instead"
+        errorLine1="    implementation(&quot;com.google.accompanist:accompanist-permissions:0.31.1-alpha&quot;)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="106"
+            column="20"/>
+    </issue>
+
+</issues>

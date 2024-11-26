@@ -1,5 +1,7 @@
 package com.example.liftoff.ui.home
 
+import com.example.liftoff.ui.notifications.*
+import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -35,13 +37,38 @@ import java.util.*
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import com.example.liftoff.R
+import com.example.liftoff.ui.notifications.NotificationHandler
 import java.lang.Thread.sleep
+import android.app.TimePickerDialog
+import android.content.ContentUris
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.activity.compose.setContent
+import android.os.Bundle
+import android.content.Context
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.withStyle
 
 
 suspend fun motivationalquotes(): Quote? {
     val client = OkHttpClient()
     val request = Request.Builder()
-        .url("https://api.realinspire.tech/v1/quotes/random")
+        .url("https://api.realinspire.tech/v1/quotes/random?minLength=100&maxLength=150")
         .build()
     return client.newCall(request).execute().use { response ->
         val resp = response.body!!.string()
@@ -50,7 +77,7 @@ suspend fun motivationalquotes(): Quote? {
         val quotes: List<Quote> = gson.fromJson(resp, quoteListType)
         quotes.first()
     }
-    }
+}
 
 val supabase =
     SupabaseService.client
@@ -62,56 +89,168 @@ val default_mod = Modifier
 fun HomeScreen(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel) {
     var quote by remember { mutableStateOf<Quote?>(null) }
     val gs by mvm.gs.collectAsState()
+    val context = LocalContext.current
+    val notificationHandler = NotificationHandler(context)
 
     LaunchedEffect(Unit) {
         CoroutineScope(Dispatchers.IO).launch {quote = motivationalquotes()}
     }
 
-    Box(
+    Column (
+//        modifier = Modifier.fillMaxHeight(0.75f)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize().weight(0.70f)
+        ) {
+            Image (
+                painter = painterResource(R.drawable.fitnessbackground),
+                contentDescription = "top background",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.graphicsLayer(alpha = 0.15f).fillMaxHeight()
+            )
+
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Card (
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth(0.35f)
+                        .padding(8.dp)
+                        .clickable{
+                            mvm.setGS(GlobalState(false, "", -1))
+                            navFuncs["login"]!!.invoke()
+                        }
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp).size(48.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = "Logout", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                    }
+                }
+                NotificationScheduler(notificationHandler = notificationHandler, context = context)
+            }
+
+            Row(modifier = Modifier.fillMaxWidth().padding(top = 100.dp)) {
+                User_Information(gs)
+
+            }
+        }
+    }
+
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.TopStart
+            .padding(top = 500.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column (
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.End
-        )
-
-        {
-            Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                Button(onClick = {
-                    mvm.setGS(GlobalState(false, "", -1))
-                    navFuncs["login"]!!.invoke()
-                }, Modifier.padding(top = 16.dp)) {
-                    Text("Log Out")
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+            contentAlignment = Alignment.TopStart
+        ) {
+            Column (
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.End
+            ) {
+                quote?.let {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp)
+                            .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
+                            .background(MaterialTheme.colorScheme.background)
+                            .padding(20.dp)
+                    ) {
+                        Text(
+                            buildAnnotatedString {
+                                append("\"")
+                                withStyle(style = SpanStyle(color = Color.DarkGray, fontSize = 20.sp)) {
+                                    append(it.content)
+                                }
+                                append("\"\n\n")
+                                withStyle(style = SpanStyle(color = Color.Black, fontSize = 24.sp, fontWeight = FontWeight.Bold)) {
+                                    append(it.author)
+                                }
+                            },
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
                 }
             }
-            quote?.let {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp)
-                        .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
-                        .padding(20.dp)
-                ) {
-                    Text(
-                        text = "\"${it.content}\" - ${it.author}",
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
+        }
+    }
+}
 
+@Composable
+fun NotificationScheduler(notificationHandler: NotificationHandler, context: Context) {
+    var hour by remember { mutableStateOf(0) }
+    var minute by remember { mutableStateOf(0) }
+
+    Card (
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clickable{
+                val timePickerDialog = TimePickerDialog(
+                    context,
+                    { _, selectedHour, selectedMinute ->
+                        hour = selectedHour
+                        minute = selectedMinute
+                        notificationHandler.scheduleWorkoutNotification(context, hour, minute)
+                    },
+                    hour,
+                    minute,
+                    true
+                )
+                timePickerDialog.show()
             }
-            User_Information(gs)
+    ) {
+        Row (
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Text(
+                fontWeight = FontWeight.Bold,
+                text = "Select Workout Time",
+            )
+
+            IconButton(onClick = {
+                val timePickerDialog = TimePickerDialog(
+                    context,
+                    { _, selectedHour, selectedMinute ->
+                        hour = selectedHour
+                        minute = selectedMinute
+                        notificationHandler.scheduleWorkoutNotification(context, hour, minute)
+                    },
+                    hour,
+                    minute,
+                    true
+                )
+                timePickerDialog.show()
+
+            }) {
+                Icon(
+                    imageVector = Icons.Filled.Notifications,
+                    contentDescription = "Add Workout",
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
     }
 }
 
 @Composable
 fun User_Information(gs: GlobalState) {
-
     val notes = remember { mutableStateListOf<User>() }
     var data = remember { mutableStateOf<List<Int>>(emptyList()) }
     var queried = remember { mutableStateOf(false) }
@@ -137,31 +276,43 @@ fun User_Information(gs: GlobalState) {
 
     Box(modifier = Modifier
         .fillMaxSize()
-        .padding(16.dp),
+        .padding(10.dp),
         contentAlignment = Alignment.TopStart) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth().padding(top = 80.dp)
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = "Hi, ${gs.username}",
-                fontSize = 32.sp,
+                text = "Hi ${gs.username},",
+                fontSize = 65.sp,
+                fontFamily = FontFamily.Serif,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.End,
-                modifier = Modifier.padding(top = 16.dp)
+                modifier = Modifier.padding(top = 16.dp, start = 16.dp)
             )
             if (data.value?.isNotEmpty() == true && queried.value) {
-                TextS("You're on a hot streak of ${data.value?.size} this week!")
-                Spacer(modifier = Modifier.height(24.dp))
+                Text(
+                    text = "You're on a hot streak of ${data.value?.size} this week!",
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Start,
+                    color = Color.DarkGray,
+                    modifier = Modifier.padding(top = 16.dp, start = 16.dp)
+                )
+                Spacer(modifier = Modifier.height(20.dp))
                 Image(
                     painter = painterResource(id = R.drawable.fire_emoji),
                     contentDescription = "Liftoff Logo",
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(top = 40.dp),
                 )
             }
             else if (queried.value) {
-                TextS("Let's get you started with a workout!")
-                Spacer(modifier = Modifier.height(24.dp))
+                Text(
+                    text = "Let's get you started with a workout!",
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Start,
+                    color = Color.DarkGray,
+                    modifier = Modifier.padding(top = 16.dp, start = 16.dp)
+                )
+                Spacer(modifier = Modifier.height(20.dp))
                 Image(
                     painter = painterResource(id = R.drawable.rocket_emoji),
                     contentDescription = "Liftoff Logo",
@@ -174,7 +325,6 @@ fun User_Information(gs: GlobalState) {
 
 @Composable
 fun Card(session: Users) {
-
     Column(modifier = default_mod) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Text(text = "ID", modifier = Modifier.weight(1f))
