@@ -39,46 +39,28 @@ import org.w3c.dom.Text
 
 @Composable
 fun GenerateScreen(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel, tdvm: WorkoutsTodoViewModel) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(5.dp),
-        contentAlignment = Alignment.TopStart
-    ) {
-        Column (
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        )
-        {
-            Row (
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
+    Column (modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start) {
 
-                Image(
-                    painter = painterResource(id = R.drawable.rocket_emoji),
-                    contentDescription = "Liftoff Logo",
-                    modifier = Modifier.size(50.dp),
-                )
-
-                Image(
-                    painter = painterResource(id = R.drawable.rocket_emoji),
-                    contentDescription = "Liftoff Logo",
-                    modifier = Modifier.size(50.dp),
-                )
-
-                Image(
-                    painter = painterResource(id = R.drawable.rocket_emoji),
-                    contentDescription = "Liftoff Logo",
-                    modifier = Modifier.size(50.dp),
-                )
-
-            }
-
-            TextH("Generate Workout")
-            Generate(navFuncs, gvm, tdvm)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Generate Workout",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.End,
+                modifier = Modifier.padding(top = 16.dp)
+            )
         }
+        Generate(navFuncs, gvm, tdvm)
     }
 }
 

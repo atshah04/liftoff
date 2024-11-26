@@ -14,9 +14,14 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.liftoff.data.dto.ExerciseDto
 import com.example.liftoff.ui.todo.ExerciseTodo
 import com.example.liftoff.ui.todo.WorkoutsTodoViewModel
@@ -24,7 +29,7 @@ import com.example.liftoff.ui.todo.WorkoutsTodoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WorkoutDropdownMenu(viewModel: WorkoutsTodoViewModel, onExerciseCreated: (ExerciseDto) -> Unit) {
+fun WorkoutDropdownMenu(viewModel: WorkoutsTodoViewModel, navHostController: NavHostController) {
     // State to hold the selected workout type
     var selectedWorkout by remember { mutableStateOf("") }
     // State to control the dropdown visibility
@@ -171,19 +176,11 @@ fun WorkoutDropdownMenu(viewModel: WorkoutsTodoViewModel, onExerciseCreated: (Ex
                     isDone = false,
                     id = viewModel.curId
                 ))
-                val exerciseDto = ExerciseDto(
-                    name = name,
-                    type = if (selectedWorkout == "Timed") "timed" else "strength",
-                    duration = duration.toIntOrNull(),
-                    sets = sets.toIntOrNull(),
-                    reps = reps.toIntOrNull(),
-                    weight = weight.toDoubleOrNull()
-                )
-                onExerciseCreated(exerciseDto)
+                navHostController.navigate("todo")
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp)
+                .padding(vertical = 8.dp)
         ) {
             Text("Save Exercise")
         }
@@ -192,26 +189,37 @@ fun WorkoutDropdownMenu(viewModel: WorkoutsTodoViewModel, onExerciseCreated: (Ex
 
 
 @Composable
-fun TodoInputScreen(viewModel: WorkoutsTodoViewModel, onBack: (ExerciseDto)->Unit) {
+fun TodoInputScreen(viewModel: WorkoutsTodoViewModel, navController: NavHostController) {
     Column (modifier = Modifier
         .fillMaxSize()
         .padding(16.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start) {
-        Text(
-            text = "Add Workout",
-            fontSize = 32.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.End,
-            modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
-        )
+        Row (
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "To Do",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.End,
+                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+            )
 
-        Row (modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-        )
-        {
-           WorkoutDropdownMenu( viewModel , onExerciseCreated = { exerciseDto -> onBack(exerciseDto)})
+            IconButton (onClick = {
+                navController.navigate("todo")
+            }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Add Workout",
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
+           WorkoutDropdownMenu( viewModel , navController)
     }
 }

@@ -27,7 +27,6 @@ fun WorkoutsScreen(db : WorkoutRepository, mvm: MainViewModel) {
 
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
-
             workouts = db.getWorkoutsByUserId(userId = gs.value.userId).reversed()
         }
     }

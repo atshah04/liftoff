@@ -68,7 +68,7 @@ import androidx.compose.ui.text.withStyle
 suspend fun motivationalquotes(): Quote? {
     val client = OkHttpClient()
     val request = Request.Builder()
-        .url("https://api.realinspire.tech/v1/quotes/random?minLength=100&maxLength=150")
+        .url("https://api.realinspire.tech/v1/quotes/random?minLength=75&maxLength=125")
         .build()
     return client.newCall(request).execute().use { response ->
         val resp = response.body!!.string()
