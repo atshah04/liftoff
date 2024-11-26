@@ -1,6 +1,7 @@
 package com.example.liftoff.ui.generate
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -29,6 +30,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Checkbox
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.toLowerCase
 import androidx.core.text.isDigitsOnly
 import com.example.liftoff.R
 import com.example.liftoff.data.viewmodel.GenerateViewModel
@@ -87,14 +89,15 @@ fun Generate(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel, tdvm: Work
 //        tdvm.todoItems.clear()
         for (i in 0..Exercices.size-1) {
             if (checkedStates[i]) {
+                val pair = gvm.exerciseMap[Exercices[i].lowercase()]!!.random()
                 tdvm.todoItems.add(
                     ExerciseTodo(
-                        Exercices[i],
-                        "Strength",
+                        pair.first,
+                        "strength",
                         null,
                         miniutesInput.text.toInt() / numChecked,
                         5,
-                        weight.text.toDouble(),
+                        weight.text.toDouble() * pair.second,
                         false,
                         1
                     )
@@ -150,8 +153,9 @@ fun Generate(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel, tdvm: Work
 
                         Text(
                             text = Exercices[index],
-                            modifier = Modifier.padding(start = 8.dp),
-                            fontSize = 18.sp
+                            modifier = Modifier.padding(start = 8.dp)
+                                .clickable { setCheckedState(index, !checkedStates[index]) },
+                            fontSize = 18.sp,
                         )
 
 

@@ -316,7 +316,7 @@ fun User_Information(gs: GlobalState) {
                 Image(
                     painter = painterResource(id = R.drawable.rocket_emoji),
                     contentDescription = "Liftoff Logo",
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.size(200.dp),
                 )
             }
         }
