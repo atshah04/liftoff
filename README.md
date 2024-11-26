@@ -31,3 +31,12 @@ https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Version-0.13-(Release-3)
 https://git.uwaterloo.ca/atshah/team101-3/-/blob/main/release3.apk?ref_type=heads
 
 # Final Release
+
+https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Version-1.0-(Release-4) 
+
+https://git.uwaterloo.ca/atshah/team101-3/-/wikis/User-Documentation 
+
+https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Design-Documentation 
+
+https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Team-Reflection 
+
