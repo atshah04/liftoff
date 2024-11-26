@@ -8,6 +8,8 @@ import androidx.compose.ui.unit.*
 import androidx.compose.runtime.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -83,12 +85,12 @@ fun ToDoItemRow (item : ExerciseTodo, viewModel : WorkoutsTodoViewModel) {
 
     LaunchedEffect(dismissState.dismissDirection) {
         if (dismissState.dismissDirection == SwipeToDismissBoxValue.StartToEnd) {
+            delay(500)
             viewModel.removeTodo(item)
-            kotlinx.coroutines.delay(100)
             dismissState.reset()
         } else if (dismissState.dismissDirection == SwipeToDismissBoxValue.EndToStart) {
+            delay(500)
             viewModel.toggleComplete(item)
-            kotlinx.coroutines.delay(100)
             dismissState.reset()
         } else {
             dismissState.reset()
@@ -119,7 +121,7 @@ fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewMode
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.End,
-                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp).verticalScroll(rememberScrollState())
             )
 
             IconButton (onClick = {
