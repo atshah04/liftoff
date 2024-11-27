@@ -107,7 +107,6 @@ fun CreatePage(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel, navm: Logi
                                 if (users.isEmpty() && username.text != "" && password.text != "") {
                                     supabase.from("users")
                                         .insert(User2(username.text, password.text))
-                                    setLoggedIn(true)
                                     val results = supabase.from("users")
                                         .select(columns = Columns.list("id", "username", "password")) {
                                             filter {
@@ -116,6 +115,7 @@ fun CreatePage(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel, navm: Logi
                                         }
                                     val users = results.decodeList<User>()
                                     setUserid(users[0].id)
+                                    setLoggedIn(true)
                                 } else {
                                     setAccountFail(true)
                                 }

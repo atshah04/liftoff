@@ -98,9 +98,7 @@ fun HomeScreen(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel) {
         CoroutineScope(Dispatchers.IO).launch {quote = motivationalquotes()}
     }
 
-    Column (
-//        modifier = Modifier.fillMaxHeight(0.75f)
-    ) {
+    Column {
         Box(
             modifier = Modifier
                 .fillMaxSize().weight(0.70f)

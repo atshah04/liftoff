@@ -95,7 +95,7 @@ fun Generate(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel, tdvm: Work
                         pair.first,
                         "strength",
                         null,
-                        miniutesInput.text.toInt() / numChecked,
+                        1 + miniutesInput.text.toInt() / numChecked,
                         5,
                         weight.text.toDouble() * pair.second,
                         false,
