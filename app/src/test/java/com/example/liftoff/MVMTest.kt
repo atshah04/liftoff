@@ -30,5 +30,6 @@ class MVMTest {
         viewModel.setGS(updatedState)
 
         assertEquals(updatedState, viewModel.gs.value)
+        assertNotEquals(viewModel.gs.value, GlobalState(false, "Alice", 1))
     }
 }

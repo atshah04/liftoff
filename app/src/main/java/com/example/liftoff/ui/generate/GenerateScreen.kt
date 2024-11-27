@@ -86,7 +86,7 @@ fun Generate(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel, tdvm: Work
     val setError = { err: Boolean -> gvm.setError(err) }
     val setOverride = { over: Boolean -> gvm.setOverride(over) }
     val exportTodo = { numChecked: Int ->
-//        tdvm.todoItems.clear()
+        tdvm.todoItems.clear()
         for (i in 0..Exercices.size-1) {
             if (checkedStates[i]) {
                 val pair = gvm.exerciseMap[Exercices[i].lowercase()]!!.random()

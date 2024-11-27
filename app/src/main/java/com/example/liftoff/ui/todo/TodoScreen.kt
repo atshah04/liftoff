@@ -104,11 +104,10 @@ fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewMode
     val gs = mvm.gs.collectAsState()
 
     Column (modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp),
+        .padding(16.dp)
+        .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start) {
-
         Row (
             modifier = Modifier
                 .fillMaxWidth()
@@ -121,7 +120,7 @@ fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewMode
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.End,
-                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp).verticalScroll(rememberScrollState())
+                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
             )
 
             IconButton (onClick = {
@@ -135,13 +134,18 @@ fun TodoScreen(navController: NavHostController, viewModel: WorkoutsTodoViewMode
             }
         }
 
-        LazyColumn {
-            items(viewModel.todoItems) { item ->
+//        LazyColumn {
+//            items(viewModel.todoItems) { item ->
+//                ToDoItemRow(item, viewModel)
+//            }
+//        }
+        Column {
+            for (item in viewModel.todoItems) {
                 ToDoItemRow(item, viewModel)
             }
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+//        Spacer(modifier = Modifier.weight(1f))
 
         if (viewModel.todoItems.size > 0) {
             Button(
