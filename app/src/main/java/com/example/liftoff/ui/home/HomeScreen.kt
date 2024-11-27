@@ -88,6 +88,8 @@ val default_mod = Modifier
 @Composable
 fun HomeScreen(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel) {
     var quote by remember { mutableStateOf<Quote?>(null) }
+    var data = remember { mutableStateOf<List<Int>>(emptyList()) }
+    var queried = remember { mutableStateOf(false) }
     val gs by mvm.gs.collectAsState()
     val context = LocalContext.current
     val notificationHandler = NotificationHandler(context)
@@ -120,6 +122,8 @@ fun HomeScreen(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel) {
                         .padding(8.dp)
                         .clickable{
                             mvm.setGS(GlobalState(false, "", -1))
+                            data.value = emptyList()
+                            queried.value = false
                             navFuncs["login"]!!.invoke()
                         }
                 ) {
@@ -135,7 +139,7 @@ fun HomeScreen(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel) {
             }
 
             Row(modifier = Modifier.fillMaxWidth().padding(top = 100.dp)) {
-                User_Information(gs)
+                User_Information(gs, data, queried)
 
             }
         }
@@ -250,11 +254,7 @@ fun NotificationScheduler(notificationHandler: NotificationHandler, context: Con
 }
 
 @Composable
-fun User_Information(gs: GlobalState) {
-    val notes = remember { mutableStateListOf<User>() }
-    var data = remember { mutableStateOf<List<Int>>(emptyList()) }
-    var queried = remember { mutableStateOf(false) }
-
+fun User_Information(gs: GlobalState, data: MutableState<List<Int>>, queried: MutableState<Boolean>) {
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
             val week_back = Calendar.getInstance()
@@ -283,7 +283,7 @@ fun User_Information(gs: GlobalState) {
         ) {
             Text(
                 text = "Hi ${gs.username},",
-                fontSize = 65.sp,
+                fontSize = 30.sp,
                 fontFamily = FontFamily.Serif,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.End,
