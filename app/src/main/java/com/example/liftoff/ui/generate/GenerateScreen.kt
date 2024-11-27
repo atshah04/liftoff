@@ -123,8 +123,8 @@ fun Generate(navFuncs: Map<String, ()->Unit>, gvm: GenerateViewModel, tdvm: Work
         ) {
             TextS("Minutes for workout")
             DefaultTextField(miniutesInput, setminutesInput, "Minutes")
-            TextS("Weight per exercise (kg)")
-            DefaultTextField(weight, setWeight, "Weight")
+            TextS("What's your bench in pounds?")
+            DefaultTextField(weight, setWeight, "100 lbs")
             val stringminutes = miniutesInput.text
             val minutesInt = stringminutes.toIntOrNull()
             Text(
