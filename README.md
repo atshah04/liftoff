@@ -32,11 +32,22 @@ https://git.uwaterloo.ca/atshah/team101-3/-/blob/main/release3.apk?ref_type=head
 
 # Final Release
 
+Meeting Miniutes
+
+Release Notes With Link To Issues and APK 
+
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Version-1.0-(Release-4) 
+
+User Documentation
 
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/User-Documentation 
 
+Design Documentation
+
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Design-Documentation 
+
+Team Reflection
 
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Team-Reflection 
 
+APK Link
