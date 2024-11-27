@@ -95,19 +95,8 @@ fun CreatePage(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel, navm: Logi
                     Text("Back")
                 }
                 Button(onClick = {
-                    coroutineScope.launch {
-                        withContext(Dispatchers.IO) {
-                            val results = supabase.from("users")
-                                .select(columns = Columns.list("id", "username", "password")) {
-                                    filter {
-                                        eq("username", username.text)
-                                    }
-                                }
-                            val users = results.decodeList<User>()
-                            if (users.isEmpty() && username.text != "" && password.text != "") {
-                                supabase.from("users")
-                                    .insert(User2(username.text, password.text))
-                                setLoggedIn(true)
+                        coroutineScope.launch {
+                            withContext(Dispatchers.IO) {
                                 val results = supabase.from("users")
                                     .select(columns = Columns.list("id", "username", "password")) {
                                         filter {
@@ -115,12 +104,23 @@ fun CreatePage(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel, navm: Logi
                                         }
                                     }
                                 val users = results.decodeList<User>()
-                                setUserid(users[0].id)
-                            } else {
-                                setAccountFail(true)
+                                if (users.isEmpty() && username.text != "" && password.text != "") {
+                                    supabase.from("users")
+                                        .insert(User2(username.text, password.text))
+                                    setLoggedIn(true)
+                                    val results = supabase.from("users")
+                                        .select(columns = Columns.list("id", "username", "password")) {
+                                            filter {
+                                                eq("username", username.text)
+                                            }
+                                        }
+                                    val users = results.decodeList<User>()
+                                    setUserid(users[0].id)
+                                } else {
+                                    setAccountFail(true)
+                                }
                             }
                         }
-                    }
                 }) {
                     Text("Register Account")
                 }
@@ -136,7 +136,7 @@ fun CreatePage(navFuncs: Map<String, () -> Unit>, mvm: MainViewModel, navm: Logi
                 { setAccountFail(false)},
                 { setAccountFail(false)},
                 "Account Creation Failed",
-                "User with username already exists, please try again.",
+                "User with username already exists Or Username is too big, please try again.",
                 Icons.Default.Info)
         }
     }
