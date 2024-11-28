@@ -57,5 +57,5 @@ https://git.uwaterloo.ca/atshah/team101-3/-/wikis/User-Documentation
 # Design Diagrams: 
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Design-Documentation 
 
-# Team Reflection: 
+# Project Reflection: 
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Team-Reflection 
