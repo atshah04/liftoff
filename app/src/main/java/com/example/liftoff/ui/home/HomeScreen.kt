@@ -64,21 +64,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
 
-
-suspend fun motivationalquotes(): Quote? {
-    val client = OkHttpClient()
-    val request = Request.Builder()
-        .url("https://api.realinspire.tech/v1/quotes/random?minLength=75&maxLength=125")
-        .build()
-    return client.newCall(request).execute().use { response ->
-        val resp = response.body!!.string()
-        val gson = Gson()
-        val quoteListType = object : TypeToken<List<Quote>>() {}.type
-        val quotes: List<Quote> = gson.fromJson(resp, quoteListType)
-        quotes.first()
-    }
-}
-
 val supabase =
     SupabaseService.client
 
