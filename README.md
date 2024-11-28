@@ -35,7 +35,8 @@ https://git.uwaterloo.ca/atshah/team101-3/-/blob/main/release3.apk?ref_type=head
 Meeting Minutes
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Meeting-Minutes---Team-101-3 
 
-Release Notes With Link To Issues and APK 
+Release Notes With Link To Issues and APK
+ 
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Version-1.0-(Release-4) 
 
 User Documentation
