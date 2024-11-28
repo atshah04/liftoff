@@ -48,4 +48,4 @@ Team Reflection:
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Team-Reflection 
 
 APK Link: 
-
+https://git.uwaterloo.ca/atshah/team101-3/-/blob/main/final_release.apk
