@@ -41,7 +41,7 @@ https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Version-1.0-(Release-4)
 User Documentation: 
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/User-Documentation 
 
-Design Documentation: 
+Design Diagrams: 
 https://git.uwaterloo.ca/atshah/team101-3/-/wikis/Design-Documentation 
 
 Team Reflection: 
